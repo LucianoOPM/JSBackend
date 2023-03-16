@@ -1,0 +1,52 @@
+{
+    "productos": [
+        {
+            "id": "001",
+            "nombre": "Procesador Intel Core i7-11700K",
+            "descripcion": "Procesador de 11ª Generación Intel Core i7-11700K (desbloqueado, LGA1200, 125W)",
+            "precio": 449.99,
+            "stock": 10,
+            "imagen": "https://images-na.ssl-images-amazon.com/images/I/71y%2BzNCIt0L._AC_SX425_.jpg"
+        },
+        {
+            "id": "002",
+            "nombre": "Tarjeta de video Nvidia GeForce RTX 3080",
+            "descripcion": "Tarjeta de video Nvidia GeForce RTX 3080 (10 GB GDDR6X, PCIe 4.0, 3x DisplayPort 1.4a, HDMI 2.1)",
+            "precio": 1399.99,
+            "stock": 5,
+            "imagen": "https://images-na.ssl-images-amazon.com/images/I/71HBl-h%2BmGL._AC_SL1500_.jpg"
+        },
+        {
+            "id": "003",
+            "nombre": "Placa base Asus ROG Maximus XIII Hero",
+            "descripcion": "Placa base Asus ROG Maximus XIII Hero (Wi-Fi 6E, PCIe 4.0, DDR4 5333, Thunderbolt 4, Aura Sync)",
+            "precio": 579.99,
+            "stock": 7,
+            "imagen": "https://images-na.ssl-images-amazon.com/images/I/71dGtNg9XGL._AC_SX679_.jpg"
+        },
+        {
+            "id": "004",
+            "nombre": "Memoria RAM Corsair Vengeance RGB Pro",
+            "descripcion": "Memoria RAM Corsair Vengeance RGB Pro 32 GB (2 x 16 GB) DDR4 3200 MHz C16 XMP 2.0",
+            "precio": 219.99,
+            "stock": 15,
+            "imagen": "https://images-na.ssl-images-amazon.com/images/I/71JzoN4H6vL._AC_SL1500_.jpg"
+        },
+        {
+            "id": "005",
+            "nombre": "Disco duro interno Samsung 970 EVO Plus",
+            "descripcion": "Disco duro interno Samsung 970 EVO Plus SSD de 2 TB M.2 NVMe",
+            "precio": 399.99,
+            "stock": 8,
+            "imagen": "https://images-na.ssl-images-amazon.com/images/I/61roKjzsg-L._AC_SX425_.jpg"
+        },
+        {
+            "id": "006",
+            "nombre": "Fuente de alimentación EVGA SuperNOVA 850 P2",
+            "descripcion": "Fuente de alimentación EVGA SuperNOVA 850 P2, 80+ PLATINUM 850W, totalmente modular, EVGA ECO Mode, 10 años de garantía",
+            "precio": 259.99,
+            "stock": 9,
+            "imagen": "https://images-na.ssl-images-amazon.com/images/I/71v6RxWiZhL._AC_SL1500_.jpg"
+        }
+    ]
+}
