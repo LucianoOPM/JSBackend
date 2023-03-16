@@ -1,38 +1,48 @@
-class Contador {//Una clase constructora es una plantilla o molde para crear objetos que define sus propiedades y métodos compartidos. Se utiliza para crear múltiples instancias de objetos con características similares.
-    constructor(responsable) {
-        this.responsable = responsable
-        this.contador = 0
-    }
+let x = [1, 2, 3, 4, 5, 6]
 
-    static contadorGlobal = 0
+let x1 = x.map((numeros, posicion) => numeros)
+//console.log(x1)
+x1 = x.map((numeros, posicion) => posicion)
+//console.log(x1);
+x1 = x.map(numeros => numeros * 2)
+//console.log(x1);
 
-    getResponsable() {
-        return this.responsable
-    }
-    contar() {
-        this.contador++
-        Contador.contadorGlobal++
-    }
-    getCuentaIndividual() {
-        return this.contador
-    }
-    getCuentaGlobal() {
-        return Contador.contadorGlobal
-    }
+let nombres = ["Ana", "Fer", "Sheyla"]
+
+let buscar = nombres.includes("Fer")
+//console.log(buscar)
+buscar = nombres.includes("fer")
+//console.log(buscar)
+buscar = nombres.includes("Xavier")
+//console.log(buscar);
+buscar = nombres.includes("yla")
+//console.log(buscar)
+
+
+let persona0 = {
+    cabello: "castaño",
+    nombre: "Ana",
+    edad: 25
+}
+let persona1 = {
+    cabello: "negro",
+    nombre: "Fernanda",
+    edad: 25,
+    mascota: true
 }
 
+let { edad = 10 } = persona1
+//console.log(edad)
+let persona2 = { ...persona0 }
+console.log(persona2)
+persona2 = persona0
+console.log(persona2)
 
-const cuenta1 = new Contador("Luciano")
-const cuenta2 = new Contador("Ana")
+let persona3 = {
+    cabello: "negro",
+    nombre: "Sheyla",
+    edad: 23
+}
+let { nombre: p3, ...rest } = persona3
 
-cuenta1.contar()
-cuenta1.contar()
-cuenta1.contar()
-cuenta2.contar()
-cuenta2.contar()
-
-console.log(cuenta1.getResponsable())
-console.log(cuenta2.getResponsable())
-console.log(cuenta1.getCuentaIndividual())
-console.log(cuenta2.getCuentaIndividual())
-console.log(cuenta1.getCuentaGlobal())
+//console.log(rest)

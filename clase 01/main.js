@@ -1,20 +1,38 @@
-let nombre = "Pablo"
-let edad = 45
-let precio = 150
-let nombreDeSerie = "Breaking Bad"
-let peliculas = "Rápidos y Furiosos 154"
+class Contador {//Una clase constructora es una plantilla o molde para crear objetos que define sus propiedades y métodos compartidos. Se utiliza para crear múltiples instancias de objetos con características similares.
+    constructor(responsable) {
+        this.responsable = responsable
+        this.contador = 0
+    }
 
-const persona = [{
-    nombre: "Alberto",
-    edad: 25,
-    casado: false,
-    comidaFav: "Pizza"
-},
-{
-    nombre: "Maria",
-    edad: 19,
-    casado: false,
-    comidaFav: "Albondigas"
-}]
+    static contadorGlobal = 0
 
-console.table(persona)
+    getResponsable() {
+        return this.responsable
+    }
+    contar() {
+        this.contador++
+        Contador.contadorGlobal++
+    }
+    getCuentaIndividual() {
+        return this.contador
+    }
+    getCuentaGlobal() {
+        return Contador.contadorGlobal
+    }
+}
+
+
+const cuenta1 = new Contador("Luciano")
+const cuenta2 = new Contador("Ana")
+
+cuenta1.contar()
+cuenta1.contar()
+cuenta1.contar()
+cuenta2.contar()
+cuenta2.contar()
+
+console.log(cuenta1.getResponsable())
+console.log(cuenta2.getResponsable())
+console.log(cuenta1.getCuentaIndividual())
+console.log(cuenta2.getCuentaIndividual())
+console.log(cuenta1.getCuentaGlobal())
