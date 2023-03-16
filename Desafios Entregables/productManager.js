@@ -56,4 +56,3 @@ console.log(producto.addProduct("Ryzen 5 3600", "Procesador Ryzen 5 3600", 2500,
 console.log(producto.getProducts())
 console.log(producto.getProductsById(3))
 console.log(producto.getProductsById(4))
-console.log(producto.getProductsById(1))
