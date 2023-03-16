@@ -18,7 +18,7 @@ class ProductManager {
         let newProduct = { title, description, price, thumbnail, code, stock }
         let productValues = Object.values(newProduct)
 
-        let validateValues = (productValues.every(value => value.length !== 0 && value !== " "));
+        let validateValues = productValues.every(value => value.length !== 0 && value !== " ");
 
         let pushStatus = ""
 
@@ -55,3 +55,5 @@ console.log(producto.addProduct("SEAGATE 1000GB", "Disco duro de 1TB 7200RPM", 6
 console.log(producto.addProduct("Ryzen 5 3600", "Procesador Ryzen 5 3600", 2500, "Sin imagen", "RYZ-5-3600", 15))
 console.log(producto.getProducts())
 console.log(producto.getProductsById(3))
+console.log(producto.getProductsById(4))
+console.log(producto.getProductsById(1))
