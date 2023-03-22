@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "DeepCool Aerocool",
+    "description": "Gabinete DeepCool ATX",
+    "price": 500,
+    "thumbnail": "Sin imagen",
+    "code": "DEEP-AERO-XYZ",
+    "stock": 5
+  },
+  {
+    "id": 2,
+    "title": "NVIDIA 1660s",
+    "description": "Tarjeta de vídeo NVIDIA MSI",
+    "price": 4500,
+    "thumbnail": "Sin imagen",
+    "code": "MSI-NVI-1660s",
+    "stock": 99
+  }
+]
