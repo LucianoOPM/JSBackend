@@ -1,0 +1,24 @@
+{
+  "contenidoStr": "{\n  \"name\": \"coderhouse-backend\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LucianoOPM/JSBackend.git\"\n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LucianoOPM/JSBackend/issues\"\n  },\n  \"homepage\": \"https://github.com/LucianoOPM/JSBackend#readme\"\n}\n",
+  "contenidoObj": {
+    "name": "coderhouse-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/LucianoOPM/JSBackend.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/LucianoOPM/JSBackend/issues"
+    },
+    "homepage": "https://github.com/LucianoOPM/JSBackend#readme"
+  },
+  "size": 476
+}

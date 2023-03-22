@@ -15,13 +15,18 @@ const objetos = [
     }
 ]
 let newArray = []
+let totalVentas = 0
 objetos.forEach((objeto) => {
     const keys = Object.keys(objeto)
+    const values = Object.values(objeto)
     keys.forEach((key) => {
         if (!newArray.includes(key)) {
             newArray.push(key)
         }
     })
+    values.forEach((value) => {
+        totalVentas += value
+    })
 })
 
-console.log(newArray);
+console.log(newArray, totalVentas);

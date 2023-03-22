@@ -1,0 +1,20 @@
+{
+  "name": "coderhouse-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucianoOPM/JSBackend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucianoOPM/JSBackend/issues"
+  },
+  "homepage": "https://github.com/LucianoOPM/JSBackend#readme"
+}

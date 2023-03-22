@@ -4,7 +4,7 @@ const arrayVacio = []
 const mostrar = (values) => {
     if (values.length !== 0) {
         values.forEach(value => {
-            console.log(value);
+            console.log(`El valor del arreglo en la posición ${value - 1} es: ${value} Y la longitud del arreglo es: ${values.length}`);
         });
     } else {
         return "Arreglo vacio"

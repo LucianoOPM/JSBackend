@@ -76,13 +76,13 @@ actual en la que se encuentra el recorrido si no se le otorga ningun valor, el i
 let persona0 = {
     cabello: "castaño",
     nombre: "Ana",
-    edad: 25
+    edad: 25,
+    mejoramiga: true
 }
 let persona1 = {
     cabello: "negro",
     nombre: "Fernanda",
-    edad: 25,
-    mascota: true
+    edad: 25
 }
 
 /*Dados los anteriores objetos, si queríamos acceder a X valor del objeto, se tendría que hacer lo siguiente:*/
@@ -98,7 +98,7 @@ let { nombre } = persona1
 /*Al valor que se está solicitando se le puede asignar un valor por defecto, en caso de que no encuentre atributo del objeto que se está solicitando. Por ejemplo: */
 
 let { casada = "No se encontró información al respecto" } = persona0
-console.log(casada);
+//console.log(casada);
 
 /*Aqui está buscando en el objeto "persona0" si hay algun atributo llamado "casada", al no encontrar ningun atributo con ese nombre, retorna un mensaje por defecto*/
 
@@ -127,33 +127,118 @@ Para eso se utilizan llaves en ves de corchetes. Por ejemplo:*/
 
 let numArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-let [, , , , , num1] = numArray
+let [, , , , , num] = numArray
+//console.log(num);
+/*El destructuring también se puede emplear con arrays, solamente que como los valores no tienen una key, no se puede acceder al valor directamente mencionando su clave, para acceder a un valor
+de un array, se tiene que saber la posición donde se encuentra el valor deseado y colocar tantas posiciones como las que sean necesarias para acceder al valor, como el ejemplo de arriba, que
+se colocan varios valores vacios separados por una coma, para poder acceder al numero que está en la posicion 5 que este es el numero 6*/
 
-console.log(num1);
+/*SPREAD OPERATOR (...)*/
+/*El spread cumple la función de que: Crea la copia de un objeto y es posible hacer cambios en este nuevo objeto, sin afectar al objeto original. Por ejemplo:*/
 
-let persona2 = { ...persona0 }
-//console.log(persona2)
-persona2 = persona0
-//console.log(persona2)
+let persona2 = persona0
+//console.log(persona2);
+let persona2Spread = { ...persona0 }
+//console.log(persona2Spread);
 
-let persona3 = {
-    cabello: "negro",
-    nombre: "Sheyla",
-    edad: 23
+
+/*En el anterior ejemplo estámos usando a "persona0" como ejemplo, como se puede ver en el ejemplo aunque parezca que ambos simplemente guardan un objeto, la verdad es que si modificamos los valores de "persona2" el objeto original cambiará sus valores, mientras que en "persona2Spread" el objeto original no los cambiará. Ejemplo:*/
+
+//console.log(persona0)
+persona2.cabello = "Rubio"
+//console.log(persona0)
+
+/*Como se puede ver, al cambiar el valor de "persona2", "persona0" también cambio el valor original, cosa que si lo hacemos con el spread operator, no pasaría. Ejemplo: */
+
+//console.log(persona0);
+persona2Spread.cabello = "Verde"
+//console.log(persona0)
+//console.log(persona2Spread)
+
+let persona4 = { ...persona0, ...persona1 }
+//console.log(persona4);
+
+/*Cuando dentro de una sola variable, se quieren guardar más de un objeto con el spread operator, y los objetos comparten los mismos identificadores de las claves, el objeto se sobreescribe por el ultimo objeto ingresado, y si las claves son diferentes entre objetos, se concatenan en un mismo objeto*/
+
+/*Tamién se pueden guardar el resto de los valores de un objeto si lo desetructuramos con un spread operator. Ejemplo:*/
+
+let { edad: EP1, ...resto } = persona0
+//console.log(resto);
+
+/*En el ejemplo anterior guardamos una sola variable aparte que es la edad, y el resto del objeto lo guardamos en otra variable aparte, cabe recalcar que regresa un objeto completo y no sus valores */
+
+/*TRIM .trim() & FLAT .flat()*/
+
+/*Trim remueve los espacios vacios del comienzo y del final (no cuenta los que separa palabras) de una cadena de texto. Por ejemplo*/
+
+let cadenaDeTexto = "                    HOLA TE SALUDO                     "
+//console.log(cadenaDeTexto.trim());
+
+/*La cadena de texto contiene muchos espacios al frente y al final del texto, trim se encarga de remover esos espacios pero sin remover los espacios entre las palabras del string*/
+/*flat por otro lado, lo que hace es remueve arrays que se encuentren dentro de otro array, conservando los valores que contienen los arrays anidados, por ejemplo:*/
+
+let arr = [1, 2, [3, 4], 5, 6, [7, [8, 9], 10]]
+// console.log(arr.flat())
+// console.log(arr.flat(2))
+// console.log(arr.flat(Infinity))
+
+/*Flat puede recibir un numero como parametro, lo que hace al recibir un numero como parametro, es contar cuantos niveles va a remover las anidaciones, si no se le pasa un valor como párametro, simplemente remueve un nivel al array padre. Infinity es un valor numerico que indica inifito, esto se hace si un array tiene una cantidad incontable de anidaciones y necesitas liberarlas todas.*/
+
+/*DYNAMIC IMPORT */
+
+const calculos = false
+
+const calculadoraEjemplo = async () => {
+    if (calculos) {
+        //Esto:
+        const { Calculadora } = await import("./calculadora.js")
+        //Es lo mismo que hacer esto:
+        //import { Calculadora } from "./calculadora.js"
+        const calculadora = new Calculadora()
+        //console.log(calculadora.suma(1, 2))
+    }
 }
-let { nombre: p3, ...rest } = persona3
+calculadoraEjemplo()
 
-//console.log(rest)
+//Lo anterior es una importación dinamica, que solamente importará los datos SI Y SÓLO SI se van a utilizar, en caso de que no se vayan a utilizar, simplemente no los trae, lo que agiliza el programa y también hace que no cargue tantos archivos
 
-let x = [1, 2, 3, 4, 5, 6]
+/*NULL*/
 
-let x1 = x.map((numeros, posicion) => numeros)
-//console.log(x1)
-x1 = x.map((numeros, posicion) => posicion)
-//console.log(x1);
-x1 = x.map(numeros => numeros * 2)
-//console.log(x1);
+/*Existen nuevas formas para validar ciertos valores según el tipo de dato que se maneje.*/
 
-/*El método .map() permite recorrer un array y te crea un array nuevo con los valores que se recorrió y si se le hizo alguna modificación, la coloca también en el nuevo array, el método acepta 3 
-parametros, la explicación anterior funciona si el método solo recibe un párametro, si se le otorga un segundo párametro, indica la posición donde se encuentra dicho valor y como tercer párametro
-el método recibe un array*/
+let variablePrueba = 0
+let variableOR = variablePrueba || "Sin valor"
+//console.log(variableOR);
+
+/*En el ejemplo de arriba, el operador OR (||) valida el tipo de dato boolean, ya sea true o false, y dependiendo el valor que reciba. Si el valor que recibe es "truthy" mostrará el primer valor que se le asigne antes del OR (||) y en caso de que sea falsy devolverá el valor establecito por defecto o sea el valor que pongamos después del OR(||) */
+
+let variableNullish = variablePrueba ?? "Sin valor"
+//console.log(variableNullish)
+
+/*Por otro lado el operador nullish (??) puede recibir valores como NULL o UNDEFINED, esto mostrará el valor que tenga establecito por defecto después del nullish(??) en caso de que reciba cualquier otro tipo de valor ya sea true, false, string o number así sean valores vacios, retornará el valor que recibió, no retornará el valor establecido por defecto*/
+
+/*Variables privadas*/
+
+/*En las clases constructoras existen las variables privadas, las cuales solamente son accesibles desde la clase constructora, no desde afuera de la clase, esto es útil si queremos tener información privada que no sea accesible desde afuera. Por ejemplo:*/
+
+class Email {
+    #password = ""
+    constructor(usuario, email, password) {
+        this.user = usuario
+        this.email = email
+        this.#password = password
+    }
+
+    #getPassword() {
+        return this.#password
+    }
+}
+
+/*Como se puede ver, arriba se creó una clase que es un email, el cual recibe un usuario y un email, y la contraseña es una variable privada, para hacer una variable privada, basta con agregar el signo de numeral(#) delante del identificador de la variable y con eso ya asignamos la variable como privada, también funciona para hacer métodos privados, como el método getPassword()*/
+
+let nuevoEmail = new Email("MrCaraTortilla", "t@gmail.com", "taquitos23")
+console.log(nuevoEmail.email)
+console.log(nuevoEmail.password);
+console.log(nuevoEmail.getPassword);
+
+/*Al declarar una variable privada, no me es posible acceder a su información desde afuera de la clase, aqui instancié un nuevo objeto al cual le pasé los datos que se requerían, y puedo acceder al email del usuario, pero si quisiera acceder a la contaseña del usuario, no me es posible verla, nisiquiera si uso el identificador, lo mismo para el método getPassword(), aunque conozca el nombre del método, no me es posible acceder a la información de la contraseña */
