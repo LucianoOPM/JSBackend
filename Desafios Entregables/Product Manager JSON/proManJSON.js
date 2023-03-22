@@ -107,7 +107,7 @@ let testProduct = {
     stock: 5
 }
 
-let producto = new ProductManager("./Desafios Entregables/Product Manager JSON/data.json")
+let producto = new ProductManager(/*"ruta a crear el archivo"*/)
 let pruebas = async () => {
     console.log(await producto.getProducts())
     console.log(await producto.addProduct("Ryzen 5 3600", "Procesador Ryzen 5 3600", 2500, "Sin imagen", "RYZ-5-3600", 15))
