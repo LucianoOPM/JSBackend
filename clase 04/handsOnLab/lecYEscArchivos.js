@@ -11,7 +11,7 @@ let fetchJson = async () => {
             size: fetchData.length
         }
         //console.log(info)
-        const infoToString = JSON.stringify(info, "null", 2)
+        const infoToString = JSON.stringify(info, null, 2)
         fs.writeFile("./clase 04/handsOnLab/info.json", infoToString, "utf-8")
 
     } catch (error) {
