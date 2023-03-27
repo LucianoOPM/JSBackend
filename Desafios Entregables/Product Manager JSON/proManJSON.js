@@ -6,6 +6,18 @@ class ProductManager {
     constructor(path) {
         this.products = []
         this.path = path
+        this.#crearArchivo()
+    }
+    async#crearArchivo() {
+        if (!fs.existsSync(this.path)) {
+            await fsPromises.writeFile(this.path, "[]", "utf-8")
+        }
+        if (fs.existsSync(this.path)) {
+            const fetchData = await fsPromises.readFile(this.path, "utf-8")
+            if (fetchData.length === 0) {
+                await fsPromises.writeFile(this.path, "[]", "utf-8")
+            }
+        }
     }
     async getProducts() {
         try {
@@ -34,9 +46,8 @@ class ProductManager {
             const find = readToObject.find(value => value.id === idProduct)
             if (!find)`No se encontró un objeto con el ID: ${idProduct}`
 
-            let guardarID = idProduct
             Object.assign(find, changes)
-            find.id = guardarID
+            find.id = idProduct
 
             const objectToString = JSON.stringify(readToObject, "null", 2)
             await fsPromises.writeFile(this.path, objectToString, "utf-8")
@@ -63,20 +74,12 @@ class ProductManager {
         }
     }
     async addProduct(title, description, price, thumbnail, code, stock) {
-        if (!fs.existsSync(this.path)) {
-            await fsPromises.writeFile(this.path, "[]", "utf-8")
-        }
-        if (fs.existsSync(this.path)) {
-            const fetchData = await fsPromises.readFile(this.path, "utf-8")
-            if (fetchData.length === 0) {
-                await fsPromises.writeFile(this.path, "[]", "utf-8")
-            }
-        }
+
         try {
+
+            if (!title || !description || !price || !thumbnail || !code || !stock) return "Favor de verificar que todos los valores se hayan ingresado correctamente"
+
             let newProduct = { title, description, price, thumbnail, code, stock }
-
-            if (!newProduct.title || !newProduct.description || !newProduct.price || !newProduct.thumbnail || !newProduct.code || !newProduct.stock) return "Favor de verificar que todos los valores se hayan ingresado correctamente"
-
             let repetedCode = this.products.every(product => product.code.toLowerCase() !== newProduct.code.toLowerCase())
             if (!repetedCode) return "El producto repite su código, favor de verificarlo"
 
@@ -107,7 +110,7 @@ let testProduct = {
     stock: 5
 }
 
-let producto = new ProductManager(/*"ruta a crear el archivo"*/)
+let producto = new ProductManager("./Desafios Entregables/Product Manager JSON/data.json")
 let pruebas = async () => {
     console.log(await producto.getProducts())
     console.log(await producto.addProduct("Ryzen 5 3600", "Procesador Ryzen 5 3600", 2500, "Sin imagen", "RYZ-5-3600", 15))
