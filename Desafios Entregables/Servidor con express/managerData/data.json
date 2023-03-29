@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "Ryzen 5 3600",
+    "description": "Procesador AMD Ryzen 5 3600",
+    "price": 2500,
+    "thumbnail": "Sin imagen",
+    "code": "RYZ-5-3600",
+    "stock": 15
+  },
+  {
+    "id": 2,
+    "title": "NVIDIA 1660s",
+    "description": "Tarjeta de vídeo NVIDIA MSI",
+    "price": 4500,
+    "thumbnail": "Sin imagen",
+    "code": "MSI-NVI-1660s",
+    "stock": 99
+  },
+  {
+    "id": 3,
+    "title": "Seagate 1TB",
+    "description": "Disco duro de 1TB",
+    "price": 500,
+    "thumbnail": "Sin imagen",
+    "code": "SEA-1-TB",
+    "stock": 50
+  },
+  {
+    "id": 4,
+    "title": "Radeon RX 6500",
+    "description": "Tarjeta de vídeo AMD RX 6500",
+    "price": 3500,
+    "thumbnail": "Sin imagen",
+    "code": "RADEON-RX-6500-XT-MECH-2X",
+    "stock": 15
+  },
+  {
+    "id": 5,
+    "title": "Intel Core i5-11400",
+    "description": "Procesador Intel Core i5-11400",
+    "price": 2899,
+    "thumbnail": "Sin imagen",
+    "code": "BX8070811400",
+    "stock": 60
+  },
+  {
+    "id": 6,
+    "title": "SSD Team Group",
+    "description": "SSD Team Group GX2 1TB",
+    "price": 909,
+    "thumbnail": "Sin imagen",
+    "code": "T253X2001T0C101",
+    "stock": 12
+  },
+  {
+    "id": 7,
+    "title": "ASUS ROG Strix Helios",
+    "description": "Gabinete ASUS ROG Strix con ventana RGB",
+    "price": 6139,
+    "thumbnail": "Sin imagen",
+    "code": "90DC0020-B30000",
+    "stock": 23
+  },
+  {
+    "id": 8,
+    "title": "EVGA 700 GB 80 PLUS",
+    "description": "Fuente de poder EVGA 80W",
+    "price": 1859,
+    "thumbnail": "Sin imagen",
+    "code": "100-GD-0700-V1",
+    "stock": 100
+  },
+  {
+    "id": 9,
+    "title": "Memoria RAM G.Skill",
+    "description": "KIT DDR4 3000mhz 16gb (2 x 8gb)",
+    "price": 1469,
+    "thumbnail": "Sin imagen",
+    "code": "F4-3000C16D-16GTZR",
+    "stock": 1
+  },
+  {
+    "id": 10,
+    "title": "ASUS ATX PRIME B560-PLUS",
+    "description": "Tarjeta Madre ATX Prime B560-PLUS",
+    "price": 1899,
+    "thumbnail": "Sin imagen",
+    "code": "PRIME B560-PLUS",
+    "stock": 72
+  }
+]
