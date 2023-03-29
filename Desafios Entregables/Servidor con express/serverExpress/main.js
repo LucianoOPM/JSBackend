@@ -40,8 +40,8 @@ app.get('/products/:productID', async (req, res) => {
         const data = await fetchData()
         const { productID } = req.params
         let number = parseInt(productID)
-        if (!productID || (isNaN(number)) || number > data.length || number < 0) return res.send(data)
-
+        if (!productID || (isNaN(number))) return res.send(data)
+        if (number > data.length) return res.send("<body style='background-color: black;'><h1 style='color:white;'>Error: El producto no existe</h1></body>")
         let findProduct = data.find(product => product.id === number)
         return res.send(findProduct)
     } catch (error) {
