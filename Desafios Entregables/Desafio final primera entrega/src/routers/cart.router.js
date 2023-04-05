@@ -23,8 +23,8 @@ router.get("/:cid", async (req, res) => {
 router.post('/:cid/product/:pid', async (req, res) => {
     const { cid, pid } = req.params
 
-    console.log(await Manager.addToCart(cid, pid))
-    res.send({ status: "succes", pid: pid })
+    const added = await Manager.addToCart(cid, pid)
+    res.send({ status: "succes", pid: pid, cart: added })
 })
 
 module.exports = router
