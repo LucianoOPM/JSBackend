@@ -1,0 +1,30 @@
+[
+  {
+    "id": 2,
+    "title": "Ryzen 5 3600",
+    "description": "Procesador AMD Ryzen 5 3600",
+    "price": 1,
+    "thumbnail": [
+      "sin imagen",
+      "con imagen",
+      "posiblemente imagen"
+    ],
+    "code": "RYZ-5-3600",
+    "stock": 90,
+    "status": true,
+    "category": "CPU"
+  },
+  {
+    "id": 3,
+    "title": "Intel Core i5-11400",
+    "description": "Procesador Intel Core i5-11400",
+    "price": 5000,
+    "thumbnail": [
+      "Sin imagen"
+    ],
+    "code": "BX8070811400",
+    "stock": 90,
+    "status": true,
+    "category": "CPU"
+  }
+]
