@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <center>
+        <form action="" method="post"><!--El tipo de método tiene que ser lo que se va a recibir por endpoint-->
+            <input type="text"
+                name="nombre"><!--El nombre del formulario tiene que tener el mismo nombre del key del objeto-->
+        </form>
+        </div>
+        <div>
+            <!--En el formulario "action" se define en endpoint al cual va dirigido-->
+            <form action="/single" method="POST" enctype="multipart/form-data">
+                <input type="file" name="myfile">
+                <button type="submit">Subir</button>
+            </form>
+    </center>
+</body>
+
+</html>

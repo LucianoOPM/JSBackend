@@ -1,7 +1,6 @@
 const fs = require('fs')
 const fsPromises = fs.promises
 
-
 class ProductManager {
     constructor(path) {
         this.products = []
