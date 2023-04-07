@@ -1,0 +1,15 @@
+<!--En el archivo handlebars main va el archivo base HTML-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/static/style/{{style}}">{{!-- Aqui se coloca el clave del objeto que se pasa por res.render en view.routers.js --}}
+</head>
+<body>
+    {{{body}}}<!--Con esta sintaxis le estamos diciendo que todo lo que se vaya generando en el index.handlebars lo pinte dentro de body. Que hace referecia a la palabra que esta dentro de las llaves--> 
+</body>
+</html>

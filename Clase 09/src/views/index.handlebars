@@ -1,0 +1,24 @@
+<!--En este lado se va a definir todo el código que se va a pintar dentro del archivo main.handlebars y ya no es necesario definir todo el doctype porque ya se definió en el archivo base.-->
+
+<div>
+    <h1>Hola {{ruser.nombre}} {{ruser.apellido}}</h1>
+    <p>Información Personal: </p>
+    <h2>Edad: {{ruser.edad}}</h2>
+    <p>Contacto: </p>
+    <h2>Telefono: {{ruser.telefono}}</h2>
+    <h2>Correo: {{ruser.correo}}</h2>
+
+    {{#if isAdmin}}{{!-- //Los condicionales no aceptan expresiones, solo valores booleanos eso quiere decir que la expresion la evaluamos antes de mandarla--}}
+    <h1>Es admin</h1>
+        {{#each food}}{{!-- Este es un método de iteración de handlebars, y también cuenta con su propia etiqueta de cierre, hay que tener en cuenta todo esto. --}}
+        <div>
+            <p>{{this.name}}</p>
+            <p>{{this.price}}</p>
+        </div>
+        {{/each}}
+    {{else}}
+    <h1>Es user</h1>
+    {{/if}}{{!-- Esta es la etiqueta de cierre para las expresiones de handlebars. --}}
+</div>
+<script src="/static/script/index.js"></script>{{!-- Hay que tener muy en consideración las rutas para que el archivo se lea correctamente.
+Recordar que static es una carpeta virtual alojada en main.js --}}
