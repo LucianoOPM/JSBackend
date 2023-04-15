@@ -7,17 +7,22 @@ const Manager = new ProductManager(path)
 
 
 router.get('/', async (req, res) => {
-    const products = await Manager.getProducts()
+    try {
+        const products = await Manager.getProducts()
 
-    const object = {
-        title: "Tienda Online",
-        products,
-        style: "home.css"
+        const object = {
+            title: "Tienda Online",
+            products,
+            style: "home.css"
+        }
+        res.render('home', object)
+    } catch (error) {
+        return res.status(500).send(error)
     }
-    res.render('home', object)
+
 })
 
-router.get('/realtimeproducts', async (req, res) => {
+router.get('/realtimeproducts', (req, res) => {
     const object = {
         title: "Agregar productos",
         script: "main.js",
