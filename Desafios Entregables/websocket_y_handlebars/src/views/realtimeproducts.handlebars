@@ -1,0 +1,36 @@
+<header>
+    <div class="title">
+        <h1 class="title__text">Agregar productos</h1>
+    </div>
+</header>
+<main>
+<div class="add">
+        <form class="add__form" id="addForm">
+            <input type="text" name="title" placeholder="nombre del articulo" required>
+            <input type="text" name="description" placeholder="descripción del articulo" required>
+            <input type="number" name="price" placeholder="precio del articulo" min="0" required>
+                <label for="thumbnail">Imagen del producto</label>
+            <input type="url" name="thumbnail" placeholder="URL de la imagen">
+            <input type="text" name="code" placeholder="código del articulo" required>
+            <input type="number" name="stock" placeholder="cantidad disponible" min="0" required>
+                <label for="status">Status</label>
+            <div class="container__checkbox" required>
+                <input type="checkbox" name="status">
+            </div>
+            <input type="text" name="category" placeholder="categoria del articulo" required>
+            <button>Agregar</button>
+        </form>
+    </div>
+    <div id="newProducts"></div>
+    
+    <div class="delete">
+        <h1>Eliminar productos</h1>
+        <form id="deleteProducts" class="add__form">
+            <input type="number" name="id" id="eraseProduct" placeholder="id del articulo a eliminar" min="0">
+            <button id="deleteButton">ELIMINAR</button>
+        </form>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/js/{{script}}"></script>
+</main>

@@ -1,0 +1,55 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+@font-face {
+    font-family: "google-font";
+    src: url('../assets/ShadowsIntoLight-Regular.ttf');
+}
+
+header{
+    color: gold;
+    background-color: #2b2544;
+    height: 150px;
+}
+
+.title{
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    left: 25%;
+    top: 20%;
+    border: 5px solid gold;
+    border-radius: 10px;
+    padding: 0 0 80px 0;
+    width: 900px;
+    text-align: center;
+    height: 50%;
+}
+
+.title__text{
+    font-family: "google-font";
+    font-size:50px;
+}
+
+main{
+    border: 1px solid green;
+    text-align: center;
+}
+.products{
+    margin-top: 50px;
+    border: 1px solid black;
+}
+
+.products__title{
+    margin-top: 20px;
+    border: 1px solid red;
+    display: inline-block;
+}
+
+.products__title-text{
+    border: 1px solid red;
+}
+.products__more-img{
+    width: 150px;
+}
