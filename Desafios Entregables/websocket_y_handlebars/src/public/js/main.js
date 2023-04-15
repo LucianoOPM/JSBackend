@@ -30,6 +30,7 @@ socket.on('server:products', (data) => {
         renderProducts += `
         <h2>${value.title}</h2>
         <h3>${value.description}</h3>
+        <p>ID: ${value.id}</p>
         <p>Costo: ${value.price}</p>
         <p>Disponibles: ${value.stock}</p>
         <p>${value.category}</p>
@@ -46,7 +47,7 @@ delButton.addEventListener('click', (e) => {
     e.preventDefault()
 
 
-    const confirmar = confirm(`Seguro que desea eliminar el producto con ID: ${idProduct.value}`)
+    const confirmar = confirm(`ATENCION!!!\n¿Esta seguro de eliminar el producto con ID: ${idProduct.value}?`)
 
     if (confirmar) {
         socket.emit('client:deleteProduct', idProduct.value)

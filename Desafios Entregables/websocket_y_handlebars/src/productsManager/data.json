@@ -1,6 +1,6 @@
 [
   {
-    "id": 2,
+    "id": 1,
     "title": "Ryzen 5 3600",
     "description": "Procesador AMD Ryzen 5 3600",
     "price": 3500,
@@ -13,7 +13,7 @@
     "category": "CPU"
   },
   {
-    "id": 3,
+    "id": 2,
     "title": "Intel Core i5-11400",
     "description": "Procesador Intel Core i5-11400",
     "price": 5000,
@@ -26,7 +26,7 @@
     "category": "CPU"
   },
   {
-    "id": 4,
+    "id": 3,
     "title": "Nvidia 1660s",
     "description": "Tarjeta de vídeo Nvidia 1660s",
     "price": 4000,
@@ -39,7 +39,7 @@
     "category": "GPU"
   },
   {
-    "id": 5,
+    "id": 4,
     "title": "Memoria RAM 2x8",
     "description": "Mamorias RAM GSKILL 16GB 2x8GB",
     "price": 2000,
