@@ -70,17 +70,18 @@ class CartManager {
         }
     }
 
-    addToCart = async (cartID/*ID CARRITO*/, productID/*ID PRODUCTO*/) => {
+    addToCart = async (cartID/*ID CARRITO*/, productID/*ID PRODUCTO*/) => {//arreglar este campo
         try {
+            if (typeof productID !== 'object') return "No se pudo agregar el objeto al carrito"
             const fetchCart = await this.#fetchAndParse(this.path)
             const cartIndex = fetchCart.findIndex((cart) => cart.id == cartID)//Me devuelve la posición en la cual se encuentra el carrito con el ID especificado.
 
             if (cartIndex === -1) return "No se encontró el carrito"
             const { products } = fetchCart[cartIndex]//array vacio
-            const productIndex = products.findIndex((product) => product.id == productID)//busca dentro del array si hay un objeto con el id especificado y devuelve su posición
+            const productIndex = products.findIndex((product) => product.id == productID.id)//busca dentro del array si hay un objeto con el id especificado y devuelve su posición
 
             if (productIndex === -1) {
-                products.push({ id: parseInt(productID), quantity: 1 })
+                products.push({ id: parseInt(productID.id), quantity: 1 })
                 const addedProduct = JSON.stringify(fetchCart, null, 2)
                 await fs.writeFile(this.path, addedProduct, "utf-8")
                 return "Agregado correctamente"

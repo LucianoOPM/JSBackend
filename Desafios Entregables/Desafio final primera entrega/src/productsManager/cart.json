@@ -8,11 +8,11 @@
       },
       {
         "id": 2,
-        "quantity": 2
+        "quantity": 10
       },
       {
         "id": 3,
-        "quantity": 1
+        "quantity": 4
       }
     ]
   },
@@ -35,30 +35,6 @@
   },
   {
     "id": 4,
-    "products": []
-  },
-  {
-    "id": 5,
-    "products": []
-  },
-  {
-    "id": 6,
-    "products": []
-  },
-  {
-    "id": 7,
-    "products": []
-  },
-  {
-    "id": 8,
-    "products": []
-  },
-  {
-    "id": 9,
-    "products": []
-  },
-  {
-    "id": 10,
     "products": []
   }
 ]

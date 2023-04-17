@@ -76,7 +76,7 @@ class ProductManager {
             return `Se a producido un error al traer el archivo ${error}`
         }
     }
-    async addProduct({ title, description, price, thumbnail, code, stock, status, category }) {
+    async addProduct({ title, description, price, thumbnail, code, stock, status = true, category }) {
         try {
             const fetchProducts = await fsPromises.readFile(this.path, "utf-8")
             this.products = JSON.parse(fetchProducts)
