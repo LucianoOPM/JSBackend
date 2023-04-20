@@ -19,7 +19,6 @@ router.get('/', async (req, res) => {
     } catch (error) {
         return res.status(500).send(error)
     }
-
 })
 
 router.get('/realtimeproducts', (req, res) => {

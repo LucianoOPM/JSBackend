@@ -6,7 +6,6 @@ const views = require('./routers/homeView.router.js')
 const { Server } = require('socket.io')
 const { webSocket } = require('./utils/socketIo.js')
 
-
 //Configuraciones
 app.engine('handlebars', hbs.engine())
 app.set('views', `${__dirname}/views`)
@@ -15,6 +14,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use('/static', express.static(`${__dirname}/public`))
 
+//routers
+app.use('/', views)
 
 //launcher del server
 const httpServer = app.listen(8080, () => {
@@ -24,7 +25,3 @@ const httpServer = app.listen(8080, () => {
 //utilización de sockets
 const io = new Server(httpServer)
 webSocket(io)
-
-
-//routers
-app.use('/', views)
