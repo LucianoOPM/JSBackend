@@ -1,0 +1,91 @@
+/_CRUD en mongo._/
+
+use mascotas
+//Con esta sentencia le decimos a Mongo que nos posiciones sobre la base de datos con la cual vamos a trabajar.
+
+db.createCollection('mascotas')
+//Con "db" nos estamos refiriendo a la base de datos sobre la cual estámos posicionados que nos cree una coleccion de datos con el nombre de 'mascotas'
+
+db.mascotas.insertMany([
+{nombre:'Roxy', especie: 'perro', edad: 10},
+{nombre:'Chettos', especie: 'gato', edad: 12},
+{nombre:'Gala', especie: 'perro', edad: 3}
+])
+//Con insterMany establecemos que vamos a insertar varios documentos.
+
+db.mascotas.find({especie: 'perro'})
+//Para realizar una busqueda se utiliza el método "find" y dentro de los parentesis le otorgamos un objeto que puede estar vacio, si está vacio traerá todos los documentos que contenga la base de datos, si tiene un objeto, el find filtrará la busqueda respecto a lo que le hayamos pasado como objeto.
+
+db.mascotas.countDocuments()
+//Con el countDocuments se realizará un conteo total de todos los documentos que contiene la coleccion de la base de datos, al ser total, si tenemos una coleccion con muchos documentos, el proceso del conteo será muy tardado y lento pero otorgará el valor total real.
+
+db.mascotas.estimatedCountDocument()
+//Por otro lado, el estimatedCountDocument realizará un conteo aproximado, si se tiene una coleccion con muchos documentos dentro de la base de datos, al realizar el conteo esta tardará menos que el countDocuments, ya que realiza un conteo aproximado, pero no otorgará el total real de los documentos.
+
+/_Filtros complejos._/
+
+Cómo se pudo observar el find y el count pueden utilizar filtros sencillos para poder trabajar de manera especial, pero si requerimos filtros más complejos se necesitará hacerlo de otra maneral. Los filtros pueden agregarse dentro de los elementos de criterio(opt) con ayuda del simbolo '$'. La sintaxis sería más o menos de la siguiente forma:
+
+db.collection.find({key: {$operator: value}})
+
+/_Operadores de filtros:_/
+
+$and: Realiza la operación and, su sintaxis: {$and: [{},{}]}
+$or: realiza operación OR. Su sintaxis: {$or: [{}, {}]}
+$lt(lower than): valores que son menores que (<)
+$lte(lower than equal): valores que son menor o igual que (<=)
+$gt(greater than): valores que son mayores que (>)
+$gte(greater than equal): valores que son mayor o igual que (>=)
+$ne(not equal): valores que no son iguales que
+$eq(equal): valores que son iguales que
+
+$exists: selecciona el documento si existe su campo
+$in: selecciona los documentos especificados en un array. Sintaxis: {key: {$in: [array of values]}}
+$nin: coincide con ninguno de los valores otorgados por un array.
+$size: coincide con el numero de elementos especificados.
+$all: todos los valores dentro de un array.
+$elemMath: coincide con algun valor definido dentro del query.
+
+/_Proyecciones_/
+
+si queremos limitar los datos que nos trae la busqueda, podemos utilizar las proyecciones, lo cual limita solamente a traernos la información que le requerimos, para simplificar las busquedas. Sintaxis:
+
+db.collection.find({}, {name: 1})
+
+//Esto indica que solamente nos traiga el nombre (name) de los documentos que están dentro de la coleccion.
+
+/_Sort_/
+
+El sort sirve para acomodar/ordenar los campos ya sea de manera ascendente(por defecto||1) o descendente(-1). Su sintaxis es:
+
+db.collection.find().sort(value1: 1, value2: -1)
+//Indicaría que nos traiga todos los documentos de la coleccion ordenados por el campo1 de manera ascendente y por el campo2 de mandera descendiente.
+
+/_skip y limit_/
+
+skip omite los resultados de busqueda si queremos acceder a otros resultados y a los primeros. su sintaxis es: .skip(offset)
+
+limit limita la cantidad de resultados que nos traerá la busqueda. Su sintaxis es: .limit(num)
+
+/_UPDATE_/
+
+Al realizar una actualización se puede actualizar solamente uno o varios documentos.
+
+db.collection.updateOne(query, update, option)
+db.collection.updateMany(query, update, option)
+
+dónde:
+
+query: sirve para filtrar que elementos vamos a actualizar (utiliza filtros iguales a .find())
+
+update: aqui indicaremos que es campo actualizaremos respecto a los datos que hayan pasado atraves del filtro.
+utiliza sus propios operadores tales como: $set, $unset, $inc, $rename, $mul, $min, $max
+
+option: opciones a tomar en cuenta para la actualización (por ejemplo upsert que inserta el valor en caso de que el documento a actualizar nisiqueira exista)
+
+/_Delete_/
+
+Elimina los datos que cumplan con las condiciones que le otorguemos
+
+db.collection.deleteOne({key: value})
+db.collection.deleteMany({key: value})

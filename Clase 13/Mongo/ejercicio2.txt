@@ -1,0 +1,55 @@
+-insertar 5 estudiantes más:
+db.estudiantes.insertMany([
+{ "nombre" : "Pablo", "edad" : 25 }
+{ "nombre" : "Juan", "edad" : 22 }
+{ "nombre" : "Lucia", "edad" : 25 }
+{ "nombre" : "Juan", "edad" : 29 }
+{ "nombre" : "Fede", "edad" : 35 }
+])
+
+primero actualizamos las edades de los estudiantes que ya tenemos:
+db.estudiantes.updateOne({$and: [{edad: {$exists: false}},{nombre: 'Nami'}]}, {$set : {'edad': 19}})
+//busque a la estudiante sin edad que se llame Nami y le coloqué la edad de 19 años.
+
+db.estudiantes.updateOne({$and: [{edad: {$exists: false}},{curso: 'ciberseguridad'}]}, {$set : {'edad': 50}})
+//al estudiante llamado Juan 5 que no tenía edad, y le coloqué la edad de 50 años.
+
+-Listar todos los documentos de la colección clientes ordenados por edad descendente.
+db.estudiantes.find({}).sort({edad: -1})
+
+Listar el cliente más joven.
+db.estudiantes.find({}).sort({edad: 1}).limit(1)
+
+Listar el segundo cliente más joven.
+db.estudiantes.find({}).sort({edad: 1}).skip(1).limit(1)
+
+Listar los clientes llamados 'Juan'
+db.estudiantes.find({nombre: 'Juan'})
+
+Listar los clientes llamados 'Juan' que tengan 29 años.
+db.estudiantes.find({$and: [{nombre: 'Juan'},{edad: 29}]})
+
+Listar los clientes llamados 'Juan' ó 'Lucia'.
+db.estudiantes.find({$or: [{nombre: 'Juan'},{nombre: 'Lucia'}]})
+
+Listar los clientes que tengan más de 25 años
+db.estudiantes.find({edad: {$gt: 25}})
+
+Listar los clientes que tengan 25 años ó menos
+db.estudiantes.find({edad: {$lte: 25}})
+
+Listar los clientes que NO tengan 25 años
+db.estudiantes.find({edad: {$ne: 25}})
+db.estudiantes.find({edad: {$not: {$eq: 25}}})
+
+Listar los clientes que estén entre los 26 y 35 años
+db.estudiantes.find({$and: [{edad: {$lte: 35}},{edad: {$gte: 26}}]})
+
+Actualizar la edad de Fede a 36 años, listando y verificando que no aparezca en el último listado
+db.estudiantes.updateOne({$and: [{nombre: 'Fede'},{edad: {$lt: 36}}]}, {$set: {edad: 36}})
+
+Actualizar todas las edades de 25 años a 26 años, listando y verificando que aparezcan en el último listado
+db.estudiantes.updateMany({edad: {$eq: 25}}, {$inc: {edad: 1}}) //Cuando se utiliza el operador "inc" el operador "set" no es necesario.
+
+Borrar los clientes que se llamen 'Juan' y listar verificando el resultado
+db.estudiantes.deleteMany({nombre: {$eq: 'Juan'}})

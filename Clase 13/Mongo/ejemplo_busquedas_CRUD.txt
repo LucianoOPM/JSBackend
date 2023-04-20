@@ -1,0 +1,16 @@
+/_Logicos_/
+
+db.estudiantes.find({curso: {$not:{$eq: 'react'}}})
+//Traeme los estudiantes que el curso NO sean Iguales a 'react'
+
+db.estudiantes.find({$or:[{curso: 'Node'},{curso: 'js'}]})
+//Los estudiantes que el curso sea Node "O" js
+
+db.estudiantes.find({$nor:[{curso: 'Node'},{curso: 'js'}]})
+//Los estudiantes que el curso no sean Node O JS
+
+db.estudiantes.find({$and:[{$or: [{edad: {$lt: 17}},{edad: {$gt: 15}}]},{$or: [{curso: {$eq: 'Java'}},{sexo: {$eq: 'M'}}]}]})
+//Los estudiantes que cumplan con ambias condiciones.
+
+db.estudiantes.find({sexo: {$exists: false}})
+//Esté me devuelve los estudiantes que tengan el campo "sexo" vacio.

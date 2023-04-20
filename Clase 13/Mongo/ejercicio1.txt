@@ -1,0 +1,53 @@
+use colegio
+//Primero se crea la base de datos llamada colegio y nos posicionamos sobre ella
+
+db.createCollection('estudiantes')
+//Después creamos la coleccion llamada estudiantes.
+
+db.estudiantes.insertMany([
+{nombre: 'Juan 1', apellido: 'Perez 1', email: 'j1@gmail.com', sexo: 'H', edad: 15, curso: 'Node'},
+{nombre: 'Juan 2', apellido: 'Perez 2', email: 'j2@gmail.com', sexo: 'M', edad: 16, curso: 'Java'},
+{nombre: 'Juan 3', apellido: 'Perez 3', email: 'j3@gmail.com', sexo: 'H', edad: 17, curso: 'js'},
+{nombre: 'Juan 3', apellido: 'Perez 4', email: 'j4@gmail.com', sexo: 'M', edad: 18, curso: 'python'},
+{nombre: 'Juan 4', apellido: 'Perez 5', email: 'j5@gmail.com', sexo: 'H', edad: 18, curso: 'react'},
+{nombre: 'Juan 5', apellido: 'Perez 5', curso: 'ciberseguridad'}
+])
+//e insertamos los valores.
+
+db.estudiantes.find({})
+//Para que obtengamos todos los documentos de la coleccion utilizamos el método find, aveces también se podrá visualizar con un objeto vacio en el interior, pero es indiferente colocarlo cuando es un objeto vacio
+
+db.estudiantes.find({sexo: 'H'})
+//Si queremos filtrar los documentos, simplemente colocamos el como se filtrarán dentro del objeto.
+
+db.estudiantes.countDocuments()
+//Aqui estámos contando todos los documentos para saber el valor total.
+
+db.estudiantes.countDocuments({sexo: 'H'})
+//Acá estamos contando pero utilizando un filtro y solamente contará con los que cumplan esa condición.
+
+<!-- EJEMPLO EN VIVO: Proyecciones, ordenamiento, saltos y limites -->
+
+-Agregar 5 estudiantes más:
+db.estudiantes.insertMany([
+{nombre: 'Zoro', apellido: 'Ronoroa', email: 'zr@gmail.com', sexo: 'H', edad: 21, curso:'pirata'},
+{nombre: 'Luffy', apellido: 'Monkey', email: 'lm@gmail.com', sexo: 'H', edad: 19, curso:'pirata'},
+{nombre: 'Robin', apellido: 'Nico', email: 'nr@gmail.com', sexo: 'M', edad: 27, curso:'arqueologa'},
+{nombre: 'Sanji', apellido: 'Vinsmoke', email: 'sv@gmail.com', sexo: 'H', edad: 22, curso:'cheff'},
+{nombre: 'TonyTony', apellido: 'Chopper', email: 'tc@gmail.com', sexo: 'H', edad: 9, curso:'medico'},
+{nombre: 'Nami'}
+])
+
+-Realizar una búsqueda aplicando ordenamientos, proyecciones, saltos y límites.
+
+db.estudiantes.find({}, {email: true, \_id: false})
+//Nos trae a todos los estudiantes pero solo mostrando su email sin mostrar su ID(el id lo muestra siempre por defecto)
+
+db.estudiantes.find({}, {nombre:true, \_id:false}).sort({nombre: -1})
+//Nos trae UNICAMENTE todos los nombres de manera descendente
+
+db.estudiantes.find({},{\_id: false, nombre: true}).skip(6)
+//Nos trae los ultimos 6 datos dentro de nuestro documento.
+
+db.estudiantes.find({},{\_id: false, nombre: true}).limit(6)
+//Nos trae unicamente los primeros 6 datos dentro del documento.
