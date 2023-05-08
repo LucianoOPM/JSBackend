@@ -15,14 +15,14 @@ const productSchema = new Schema({
         type: Number,
         required: true
     },
-    thumbnail: {
-        type: Object,
-        unique: true
-    },
+    thumbnail: [{
+        type: String
+    }],
     code: {
         type: String,
         unique: true,
-        required: true
+        required: true,
+        index: true
     },
     stock: {
         type: Number,

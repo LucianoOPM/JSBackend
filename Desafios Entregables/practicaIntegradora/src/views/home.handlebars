@@ -1,24 +1,37 @@
 <header>
-    <div class="title">
-        <h1 class="title__text">Tienda de productos online</h1>
+    <div class="title__text--container">
+        <h1 class="title__text"> <a href="/api">E-Commerce</a></h1>
     </div>
+    <div class="search-bar">
+       <form method="get">
+        <label for="search">Buscar Producto:</label>
+            <input type="search" name="search" id="search">
+            <button class="search-btn"><i class="bi bi-search"></i></button>
+       </form>
+    </div>
+    <nav class="navigation">
+        <a href="/api/carts">CARRITO</a>
+        <a href="/api/chat">CONTACTO</a>
+        <a href="/api/realtimeproducts">PRODUCTOS</a>
+    </nav>
 </header>
 <main>
-    <div class="products">
-        {{#each products}}
-        <div class="products__title">
-            <h2 class="products__title-text">{{this.title}}</h2>
+    {{#each products}}
+        <div class="products__container">
+            <div class="products__img-container">
+                <img class="product__img" src="{{this.thumbnail}}">
+            </div>
+            <div class="products__texts">
+                <h2 class="product__title">Producto: {{this.title}}</h2>
+                <h3 class="product__description">{{this.description}}</h3>
+                <h3 class="product__price">Precio: {{this.price}}</h3>
+                <h3 class="product__stock">Disponibles: {{this.stock}}</h3>
+            </div>
         </div>
-        <div class="products__more">
-            <p class="products__more-description">{{this.description}}</p>
-            <p class="products__more-price">Precio: {{this.price}}</p>
-            <p class="products__more-stock">Disponibles: {{this.stock}}</p>
-            <img class="products__more-img" src="{{this.thumbnail}}">
-        </div>
-            <hr>
-        {{/each}}
-    </div>
+    {{/each}}
 </main>
 <footer>
     
 </footer>
+
+{{!-- Cambiar los px a unidades % --}}
