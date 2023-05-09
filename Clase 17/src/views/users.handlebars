@@ -1,0 +1,21 @@
+<main>
+    <div>
+        {{#each payload}}
+            <li>
+                <strong>Nombre: </strong> {{this.first_name}} - 
+                <strong>Apellido: </strong> {{this.last_name}} -
+                <strong>Email: </strong> {{this.email}}
+            </li>
+        {{/each}}
+
+        <center>
+            {{#if hasPrevPage}}
+                <a href="/users?page={{prevPage}}"><button>Anterior</button></a>
+            {{/if}}
+
+            {{#if hasNextPage}}
+            <a href="/users?page={{nextPage}}"><button>Siguiente</button></a>
+            {{/if}}
+        </center>
+    </div>
+</main>

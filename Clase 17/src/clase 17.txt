@@ -1,0 +1,55 @@
+//Agregaciones/aggregations:
+
+Las agregaciónes constan de realizar multiples operaciones generalmente en multiples documentos. Sus principales funciones son:
+
+1.-Agrupar documentos en base a un criterio en especifico
+2.-Realizar una operación sobre dicho documento.
+3.-Analizar cambios de información con el paso del tiempo.
+
+//Funcionamiento:
+
+Las aggregation pipelines consisten en una cantidad indeterminada (depende la complejidad) de pasos(stages) para realizar una tarea y cada paso corresponderá a una operación a realizar.
+Al finalizar un stage, el resultado de esa consulta, pasará a ser el input del siguiente stage.
+
+Un ejemplo de un pipeline aggregation podría ser el siguiente:
+
+1.-Primero filtra los documentos que tengan un valor "x" mayor a 20
+2.-Luego ordenalos de mayor a menor
+3.-Luego en un nuevo campo devuelve el valor máximo
+4.-Luego en un nuevo campo devuelve el valor minimo
+5.-Luego en un nuevo campo devuelve la suma total de todos los documentos.
+
+Los principales stages disponibles serían:
+
+$count: Cuenta el numero de documentos disponibles que se encuentren en la stage actual.
+$group: Permite agrupar los documentos disponibles en nuevos grupos según un criterio en especifico, *cada grupo cuenta con un _id nuevo*, además de los valores acumulados.
+$limit: Limita el numero de documentos que saldrán de dicha stage
+$lookup: Realiza un "left join" (combinación de campos) de una colección de la misma base de datos en los documentos del stage actual.
+$set/$addFields: Agregan una nueva propiedad a los documentos que se encuentren en dicha stage
+$skip: Devuelve solo los documentos encontrados después del offset indicado.
+$match: Devuelve los valores que cumplan el criterio de busqueda, aqui se podrían colocar los filtros comunes.
+$merge: Escribe los resultados de un pipeline en una colección debe ser la ultima stage del pipeline para poder funcionar.
+
+Lista completa de los stages de mongo: https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/
+
+
+EJEMPLO DIAPO 16 & 19:
+LINEA 26-59 main.js
+
+Si se quisiera dinamizar el manejo de datos, bastaría con agregar variables y esas variables pasarlas como valor a la hora de hacer algun cambio.
+
+Actividad de clase:
+
+Obtener a los estudiantes agrupados por calificación del mejor al peor
+Obtener a los estudiantes agrupados por grupo.
+Obtener el promedio de los estudiantes del grupo 1B
+Obtener el promedio de los estudiantes del grupo 1A
+Obtener el promedio general de los estudiantes.
+Obtener el promedio de calificación de los hombres
+Obtener el promedio de calificación de las mujeres.
+
+Lineas 75-138 main.js
+
+PAGINACION CON MONGOOSE
+
+Mongoose Paginate v2 es un plugin de mongoose que nos permite crear paginaciones de nuestra base de datos para poder mostrarlo del lado del cliente de manera más sencilla, para poder comenzar a utilizar primero se importa el mongoose paginate dentro del Schema donde lo vas a utilizar (users.model.js en mi caso) y en el Schema utilizamos el método plugin para agregarle un plugin, y dónde se guardo la importación de mongoose paginate se le pasa al plugin.
