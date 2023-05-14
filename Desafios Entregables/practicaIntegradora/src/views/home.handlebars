@@ -16,22 +16,14 @@
     </nav>
 </header>
 <main>
-    {{#each products}}
+    {{#each docs}}
         <div class="products__container">
             <div class="products__img-container">
                 <img class="product__img" src="{{this.thumbnail}}">
             </div>
             <div class="products__texts">
-                <h2 class="product__title">Producto: {{this.title}}</h2>
-                <h3 class="product__description">{{this.description}}</h3>
-                <h3 class="product__price">Precio: {{this.price}}</h3>
-                <h3 class="product__stock">Disponibles: {{this.stock}}</h3>
+                <a href="/views/products/{{this.id}}"><h2 class="product__title">Producto: {{this.title}}</h2></a>
             </div>
         </div>
     {{/each}}
 </main>
-<footer>
-    
-</footer>
-
-{{!-- Cambiar los px a unidades % --}}

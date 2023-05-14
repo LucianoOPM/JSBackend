@@ -20,9 +20,14 @@ app.use('/static', express.static(`${__dirname}/public`))
 
 //routers
 app.use(main)
+app.use((err, req, res, next) => {
+    console.log(err)
+    res.status(500).send("Todo mal")
+})
 
 //launcher del server
-const httpServer = app.listen(8080, () => {
+const httpServer = app.listen(8080, (err) => {
+    if (err)`ERROR en el servidor ${err}`
     console.log("Se inició el servidor.")
 })
 

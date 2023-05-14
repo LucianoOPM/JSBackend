@@ -7,13 +7,12 @@ const mongoManager = require('../DAO/productManagerMongo/productMMongo.js')
 //const Manager = new ProductManager(path)
 
 
-router.get('/', async (req, res) => {
+router.get('/products', async (req, res) => {
     try {
-        const products = await mongoManager.getProduct()
-
+        let { docs } = await mongoManager.getProduct({})
         const object = {
             title: "Tienda Online",
-            products,
+            docs,
             style: "home.css"
         }
         res.render('home', object)
@@ -21,5 +20,36 @@ router.get('/', async (req, res) => {
         return res.status(500).send(error)
     }
 })
+router.get('/products/:pid', async (req, res) => {
+    try {
+        const product = await mongoManager.getProduct(req.params)
+        const object = {
+            pageTitle: "producto",
+            product,
+            style: "home.css",
+            script: "viewProducts.js"
+        }
+        res.status(200).render('productViews', object)
+    } catch (error) {
+        return res.status(400).send({
+            status: `ERROR`,
+            error
+        })
+    }
+})
 
-module.exports = router 
+router.post('/products/:pid', async (req, res) => {
+    try {
+        console.log(req.params)
+        console.log(req.body)
+        res.send({
+            status: 'success'
+        })
+    } catch (error) {
+        return res.status(400).send({
+            status: `ERROR`,
+            error
+        })
+    }
+})
+module.exports = router

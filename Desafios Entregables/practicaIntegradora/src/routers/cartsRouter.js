@@ -4,7 +4,7 @@ const Manager = require('../DAO/productManagerMongo/cartManagerM.js')
 
 router.post('/', async (req, res) => {
     try {
-        const test = await Manager.newCart(req.body)
+        const test = await Manager.newCart()
         res.send({
             status: 'success',
             payload: test
@@ -14,32 +14,59 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.get('/', async (req, res) => {
+router.get('/:cid', async (req, res) => {
     try {
-        const getCarts = await Manager.getCarts(req.query)
+
+        const { docs } = await Manager.getCarts(req.params)
+        const [cart] = docs
+        console.log(cart.products)
+        const viewCart = {
+            pageTitle: `Carrito #${req.params.cid}`,
+            renderCart: cart.products
+        }
+
+        res.render('cartView', viewCart)
+    } catch (error) {
+        return `ERROR: ${error}`
+    }
+})
+
+//Agrega al carrito la cantidad de productos pasadas por Body.Pendiente a mañana
+router.put('/:cid', async (req, res) => {
+    try {
+        const addProducts = await Manager.addProductInCart(req.body, req.params)
+
+        if (!addProducts) {
+            return res.status(404).send({
+                status: "ERROR",
+                mensaje: addProducts
+            })
+        }
+
+        res.status(200).send({
+            status: 'success',
+            mensaje: addProducts
+        })
+    } catch (error) {
+        return `ERROR: ${error}`
+    }
+})
+
+//Si el carrito ya cuenta con el producto, incrementa su cantidad.
+router.put('/:cid/products/:pid', async (req, res) => {
+    try {
+        const incQuantity = await Manager.addProductInCart(req.body, req.params)
 
         res.send({
             status: 'success',
-            payload: getCarts
+            payload: incQuantity
         })
     } catch (error) {
         return console.log(`ERROR: ${error}`)
     }
 })
 
-router.put('/:cid/product/:pid', async (req, res) => {
-    try {
-        const addProduct = await Manager.addProductInCart(req.params)
-
-        res.send({
-            status: 'success',
-            payload: addProduct
-        })
-    } catch (error) {
-        return console.log(`ERROR: ${error}`)
-    }
-})
-
+//Elimina todos los productos del carrito seleccionado
 router.delete('/:cid', async (req, res) => {
     try {
 
@@ -51,6 +78,19 @@ router.delete('/:cid', async (req, res) => {
         })
     } catch (error) {
         return console.log(`ERROR: ${error}`)
+    }
+})
+
+//Elimina el producto seleccionado del carrito seleccionado
+router.delete('/:cid/products/:pid', async (req, res) => {
+    try {
+        const delProductFromCart = await Manager.delCart(req.params)
+        res.send({
+            status: 'Eliminado correctamente',
+            delProductFromCart
+        })
+    } catch (error) {
+        return `ERROR: ${error}`
     }
 })
 
