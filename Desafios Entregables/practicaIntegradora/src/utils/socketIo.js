@@ -11,19 +11,19 @@ const webSocket = (io) => {
 
             //Socket de los productos.
 
-            let products = await MMongo.getProduct()
-            socket.emit('server:products', products)
+            let { docs } = await MMongo.getProduct({})
+            socket.emit('server:products', docs)
 
             socket.on('client:addProduct', async (data) => {
                 await MMongo.createProduct(data)
-                products = await MMongo.getProduct()
-                socket.emit('server:products', products)
+                let { docs } = await MMongo.getProduct({})
+                socket.emit('server:products', docs)
             })
 
             socket.on('client:deleteProduct', async (data) => {
                 await MMongo.deleteProduct(data)
-                products = await MMongo.getProduct()
-                socket.emit('server:products', products)
+                let { docs } = await MMongo.getProduct({})
+                socket.emit('server:products', docs)
             })
 
             //Socket del chat
