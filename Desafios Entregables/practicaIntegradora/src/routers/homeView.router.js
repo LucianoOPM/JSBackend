@@ -38,7 +38,7 @@ router.get('/products/:pid', async (req, res) => {
     }
 })
 
-router.post('/products/:pid', async (req, res) => {
+/* router.post('/products/:pid', async (req, res) => {
     try {
         console.log(req.params)
         console.log(req.body)
@@ -51,5 +51,5 @@ router.post('/products/:pid', async (req, res) => {
             error
         })
     }
-})
+}) */
 module.exports = router

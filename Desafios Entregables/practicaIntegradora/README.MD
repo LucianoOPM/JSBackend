@@ -1,3 +1,9 @@
+INDICE:
+Linea 5: Primera pre entrega.
+Linea 47: Segunda pre entrega
+
+/_------------------------------------------------------PRIMERA PRE ENTREGA--------------------------------------------_/
+
 ¿Cómo usar?
 
 La base de datos la implemente en un servidor local para poder realizar las pruebas sin necesidad de una acceder a una cuenta o contraseña.
@@ -37,3 +43,62 @@ Revisa si el carrito tiene un producto con el ID generado, si no lo tiene, lo ag
 DELETE: localhost:8080/carts/IDMONGOCARRITO
 
 Elimina un carrito completo
+
+/_----------------------------------------------------------------SEGUNDA PRE ENTREGA-----------------------------------------------------------_/
+
+TODAS LAS URL ESCUCHAN EN localhost:8080
+Sé que que me faltan rutas y que tengo rutas demás, eso lo iré cambiando con el paso del tiempo.
+
+/GET de productos
+
+URL: /api/products
+Permite visualizar todos los productos de la base de datos, con su respectiva pagina, también acepta req.query tales como
+
+?limit[Number]: Establece un limite de documentos para visualizar.
+?page[Number]: Indica la página en la que se está actualmente.
+?status[Boolean]: Si el status es true, retorna todos los productos con disponibilidad en true, si es false, retorna los productos con disponibilidad en false
+?category[String]: Permite buscar los productos por categoria, tales como CPU, GPU, RAM, etc...
+?sort[String/Number]: Ordena los productos según el precio, "asc" o 1 para orden ascendente, "desc" o -1 para descendente.
+
+Todos son concatenables entre si y no deberían presentar fallo alguno
+
+/DELETE de carrito
+
+URL: api/carts/:cid/products/:pid
+Elimina del carrito el producto seleccionado. Recibe ID's de mongo como parametros
+
+/PUT de carrito
+
+URL: api/carts/:cid
+Recibe un array de objetos por body y actualiza el carrito pasado por req.params según el ID del carrito. el array tiene el siguiente formato:
+
+Lo que esta entre comillas no se cambia.
+"inserts": [
+{"idProduct": IDMONGO, "qty": Numero},
+{"idProduct": IDMONGO, "qty": Numero},
+{"idProduct": IDMONGO, "qty": Numero},
+etc....
+]
+
+URL: api/carts/:cid/products/:pid
+Actualiza unicamente la cantidad pasada por el body del producto en el carrito especificado por params.
+FORMATO:
+{
+"qty": Numero
+}
+
+/DELETE de los productos del carrito
+
+URL: api/carts/:cid
+Elimina todos los productos del carrito especificado.
+
+/GET de los carritos
+
+URL: api/carts/:cid
+Visualización del contenido del carrito con populate del producto
+
+/VIEWS de los productos
+
+URL: views/products
+
+Visualiza una lista de productos con el titulo y la imagen (Si tiene una) y si se le da click al nombre del producto, te dirige a otra página dónde se despliega más información del producto y aparece el botón de agregar al carrito (De momento no hace nada más que mostrar un console.log con el ID del producto.)

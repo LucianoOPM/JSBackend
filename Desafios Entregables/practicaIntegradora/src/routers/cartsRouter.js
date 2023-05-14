@@ -19,7 +19,6 @@ router.get('/:cid', async (req, res) => {
 
         const { docs } = await Manager.getCarts(req.params)
         const [cart] = docs
-        console.log(cart.products)
         const viewCart = {
             pageTitle: `Carrito #${req.params.cid}`,
             renderCart: cart.products
