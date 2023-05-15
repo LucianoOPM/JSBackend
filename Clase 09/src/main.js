@@ -5,11 +5,11 @@ const productRouter = require('./routers/products.router.js')
 //const petRouter = require('./routers/pets.routers.js')
 const cookieParser = require('cookie-parser')
 const { uploader } = require('./utils.js')
-const routerView = require('./routers/views.router.js')
 
 //Configuración de handlebars/motor de plantillas
 
 /*Los distitnos motores de plantillas tienen sintaxis diferentes, no todos se configuran igual.*/
+const routerView = require('./routers/views.router.js')
 const hbs = require('express-handlebars')
 
 app.engine("handlebars", hbs.engine())

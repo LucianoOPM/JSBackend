@@ -30,11 +30,11 @@ router.get('/', (req, res) => {
 
     res.render('index', test)
 })
-router.get('/register', (req, res) => {
+/* router.get('/register', (req, res) => {
     res.render('register', {
         style: 'index.css'
     })
-})
+}) */
 
 
 module.exports = router
