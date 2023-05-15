@@ -1,0 +1,68 @@
+/*COOKIES Y STORAGE*/
+Las cookies nos ayudan a guardar cierta información de un cliente que visita nuestra página web, para que el servidor pueda servir eso a su favor.
+
+Las cookies son un PEQUEÑO archivo de texto que nos ayuda almacenando Nombres de usuario, ID de sesiones y preferencias del navegador. Viaja entre las peticiones del cliente al servidor.
+
+Algunos ejemplo de los rastros que puede dejar un cliente al navegar en la web:
+
+    *El cliente hace un login>La cookie almacena el ID de la sesión
+    *El cliente pone el modo oscuro del navegador>La cookie almacena el ID de la sesion y las de configuración
+    *El cliente busca productos especificos>La cookie almacena las busquedas recientes
+
+IMPORTANTE: Las cookies son facilmente accesibles desde el navegador POR NINGUN MOTIVO se almacenará información sensible o métodos de pago que puedan comprometer la seguridad del cliente.
+
+CARACTERISTICAS DE LAS COOKIES
+
+1.-A las cookies se les puede configurar un tiempo de vida.
+2.-Al almacenarse del lado del cliente, el espacio con el que se cuenta es muy limitado, por lo que se recomienda elegir de forma adecuada lo que se vaya a guardar como cookie.
+3.-Podemos asignarles claves secretas para aumentar su seguridad.
+4.-Viven en el navegador por lo que no podemos almacenar datos sensibles.
+
+
+//UTILIZACIÓN DE COOKIES
+//SET, GET Y CLEAR
+
+app.js linea 16
+
+Setear una cookie
+Una cookie vive en lo que vive una petición, por lo tanto llamaremos al endpoint '/setCookie' donde utilizaremos el objeto res para poder asignar una cookie al cliente en su navegador.
+Get a cookie
+para leer la cookie que está seteada utilizaremos el objeto req en el endpoint '/getCookie' ya que el navegador tiene la cookie que queremos recibir.
+eliminar una cookie
+Además eliminaremos del cliente la cookie utilizando el endpoint '/deleteCookie'
+
+**TIEMPO DE VIDA DE UNA COOKIE**
+El tiempo de vida por defecto de una cookie depende de cómo se configure en el servidor web que las envía. Generalmente, las cookies pueden establecerse con un tiempo de vida limitado o sin fecha de caducidad, lo que significa que permanecerán en el navegador del usuario hasta que se eliminen manualmente o expiren.
+
+Si una cookie no tiene una fecha de caducidad establecida, se considera una "cookie de sesión" y se elimina automáticamente cuando el usuario cierra su navegador. Si se establece una fecha de caducidad, la cookie se almacenará en el navegador del usuario durante el período especificado antes de ser eliminada.
+
+Es importante tener en cuenta que la duración de una cookie puede afectar la privacidad del usuario, ya que una cookie puede rastrear su actividad en línea durante el tiempo que esté almacenada en su navegador. Por esta razón, se recomienda que las cookies solo se establezcan con el tiempo de vida necesario para su función específica y que se eliminen después de su uso.
+
+**AGREGANDO SEGURIDAD A LAS COOKIES**
+
+¿Qué es firmar una cookie?
+
+Cómo las cookies viven del lado del navegador, no podemos asegurar que la cookie no sea modificada por el usuario, pero si podemos validar que una cookie sea identica a la generada.
+
+Para poder acceder a las signedcookies ya no podemos realizarlo con req.cookie, en su ves, ahora utilizaremos req.signedCookies. Si se quiere acceder a una cookie que fue alterada por el usuario, está retornará false si queremos acceder a ella.
+
+
+//SESSIONS//
+
+¿Cómo identifica el navegador que un usuario es diferente a otro usuario?
+Esto se maneja a traves de sessions, con session nos permite gestionar al usuario que se registró en la aplicación web para poder conservar sus datos de información. Para poder diferenciar entre un usuario comun o un administrador de la página.
+
+Esto se maneja a través de req.session y sus caracteristicas son:
+
+1.-La información que se guarda en session se almacena del lado del sevidor.
+2.-Del lado del cliente se crea un identificador unico para acceder a la información desde el navegador.
+3.-Los datos almacenados en session se borran cuando se cierra la ventana del navegador
+4.-Se utiliza comunmente para guardar los datos del usuario al iniciar sesión.
+
+Primero se debe instalar session desde el npm, después se importa, se inicializa y se le pasa un objeto de configuración **app.js linea 16**
+
+Secret es lo mismo que firmar una cookie. resave permite mantener una sesión activa y saveUninitialized permite guardar cualquier tipo de sesión.
+
+Para eliminar una session se hace atraves del método, destroy de session. app.js linea 73
+
+**LOGIN con SESSION**
