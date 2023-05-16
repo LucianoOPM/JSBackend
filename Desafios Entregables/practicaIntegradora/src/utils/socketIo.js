@@ -10,10 +10,6 @@ const webSocket = (io) => {
         try {
 
             //Socket de los productos.
-
-            let { docs } = await MMongo.getProduct({})
-            socket.emit('server:products', docs)
-
             socket.on('client:addProduct', async (data) => {
                 await MMongo.createProduct(data)
                 let { docs } = await MMongo.getProduct({})

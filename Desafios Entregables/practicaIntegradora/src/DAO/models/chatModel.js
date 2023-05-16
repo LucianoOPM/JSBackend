@@ -4,8 +4,7 @@ const collection = 'messages'
 
 const chatSchema = new Schema({
     user: {
-        type: Schema.Types.ObjectId,
-        ref: 'usuarios',
+        type: String,
         required: true,
         unique: true,
         index: true
