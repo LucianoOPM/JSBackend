@@ -3,19 +3,38 @@ const { userModel } = require("../models/usersModel");
 class UserManager {
     addUser = async (data) => {
         try {
+            const findUser = await userModel.findOne({ email: data.email })
+
+            if (findUser) {
+                throw new Error('El usuario ya existe.')
+            }
+
             return await userModel.create(data)
         } catch (error) {
-            return `ERROR: ${error}`
+            throw error
         }
     }
 
-    getUsers = async ({ limit, page, sort, query }) => {
+    loginUser = async (data) => {
         try {
-            if (!limit) {
-                return await userModel.find({}).limit(10).skip(page * 10).sort({ [query]: sort })
+            const { email, password } = data
+
+            const findUser = await userModel.findOne({ email })
+            if (!findUser) {
+                throw new Error('El correo no se encuentra en la base de datos')
             }
+            if (findUser.password !== password) {
+                throw new Error('La contraseña es incorrecta')
+            }
+
+            return findUser
+            /*             
+            if (!limit) {
+            return await userModel.find({}).limit(10).skip(page * 10).sort({ [query]: sort })
+            } 
+            */
         } catch (error) {
-            return `ERROR: ${error}`
+            throw error
         }
     }
 
@@ -32,5 +51,3 @@ class UserManager {
 module.exports = {
     UserManager
 }
-
-//colocar los demás métodos, implementar multer en la subida de imagenes de los productos.

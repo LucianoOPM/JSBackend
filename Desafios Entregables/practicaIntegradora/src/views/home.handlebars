@@ -2,6 +2,7 @@
     <div class="title__text--container">
         <h1 class="title__text"> <a href="/views/products">E-Commerce</a></h1>
     </div>
+    <h3>Hola! {{first_name}} {{last_name}} ROL: {{rol}}</h3>
     <div class="search-bar">
        <form method="get">
         <label for="search">Buscar Producto:</label>
@@ -13,6 +14,9 @@
         <a href="/api/carts">CARRITO</a>
         <a href="/api/chat">CONTACTO</a>
         <a href="/api/realtimeproducts">PRODUCTOS</a>
+        <form action="/api/session/logout" method="post">
+            <button>Cerrar sesion</button>
+        </form>
     </nav>
 </header>
 <main>

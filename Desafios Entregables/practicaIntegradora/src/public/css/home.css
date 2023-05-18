@@ -3,6 +3,7 @@
     src: url('../assets/fonts/ShadowsIntoLight-Regular.ttf');
 }
 
+
 body{
     background-color: #8e8c9d;
 }
@@ -67,7 +68,7 @@ header{
 .search-bar{
     display: inline-block;
     position: relative;
-    left: 25%;
+    left: 15%;
     bottom: 10px;
     width: 25%;
     height: 20%;
@@ -111,4 +112,11 @@ header{
     font-weight: bolder;
     font-family: google-font;
     display: inline-block;
+}
+
+h3{
+    display: inline-block;
+    color: #8e8c9d;
+    position: relative;
+    left: 9%;
 }

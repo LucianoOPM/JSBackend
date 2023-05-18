@@ -102,3 +102,23 @@ Visualización del contenido del carrito con populate del producto
 URL: views/products
 
 Visualiza una lista de productos con el titulo y la imagen (Si tiene una) y si se le da click al nombre del producto, te dirige a otra página dónde se despliega más información del producto y aparece el botón de agregar al carrito (De momento no hace nada más que mostrar un console.log con el ID del producto.)
+
+/_DESAFIO ENTREGABLE: Login por formulario._/
+
+Rutas:
+
+GET /views/session
+
+Es una vista principal que si estás logueado te deja ver tu perfil y te permite cerrar sesión, en caso de que no estés logueado, te mostrará unos enlaces de redirección para login y registro.
+
+GET /views/session/login
+
+Te deja loguearte en el servidor, en caso de que seas adminCoder@coder.com (está validado el correo más no la contraseña) te mostrará en products que si eres admin, en caso de que seas cualquier otro usuario registrado, te dará el rol de user. Una vez logueado, te redirige a productos. Si el logueo no fue éxitoso, te redirigirá a la misma web de login para que te loguees de manera correcta.
+
+GET /views/session/register
+
+Te permite registrarte en la página y una ves que te registres, te redirige al login, para que inicies sesión en la página.
+
+GET /views/products
+
+No muestra nada si el usuario no está logueado te redirige a el inicio de sesion, y una ves adentro, te permite cerrar sesión.

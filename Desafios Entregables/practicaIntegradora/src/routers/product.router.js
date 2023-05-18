@@ -29,6 +29,21 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.post('/:pid', async (req, res) => {
+    try {
+        console.log(req.params)
+        console.log(req.body)
+        res.send({
+            status: 'success'
+        })
+    } catch (error) {
+        return res.status(400).send({
+            status: `ERROR`,
+            error
+        })
+    }
+})
+
 /*'api/products/:pid'*/
 /*POST api/products */
 

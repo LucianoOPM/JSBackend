@@ -1,8 +1,11 @@
 //Importaciones
 const express = require('express')
 const hbs = require('express-handlebars')
-const main = require('./routers/routes.js')
 const { Server } = require('socket.io')
+const { create } = require('connect-mongo')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const main = require('./routers/routes.js')
 const { webSocket } = require('./utils/socketIo.js')
 const { connectDB } = require('./config/DBConfig.js')
 
@@ -11,12 +14,25 @@ const app = express()
 connectDB()
 
 //Configuraciones
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.engine('handlebars', hbs.engine())
 app.set('views', `${__dirname}/views`)
 app.set('view engine', 'handlebars')
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
 app.use('/static', express.static(`${__dirname}/public`))
+app.use(cookieParser('Mensaje secreto'))
+app.use(session({
+    store: create({
+        mongoUrl: 'mongodb://127.0.0.1:27017/ecommerce',
+        mongoOptions: {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }
+    }),
+    secret: 'Mensaje secreto 2',
+    resave: false,
+    saveUninitialized: false
+}))
 
 //routers
 app.use(main)

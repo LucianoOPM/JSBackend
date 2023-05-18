@@ -19,7 +19,9 @@ const usersSchema = new Schema({
     gender: {
         type: String,
         default: "undefined"
-    }
+    },
+    age: Number,
+    password: String
 })
 
 const userModel = model(collection, usersSchema)
