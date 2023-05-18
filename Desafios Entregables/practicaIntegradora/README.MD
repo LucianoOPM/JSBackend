@@ -1,6 +1,7 @@
 INDICE:
 Linea 5: Primera pre entrega.
 Linea 47: Segunda pre entrega
+Linea 106: Login por formulario
 
 /_------------------------------------------------------PRIMERA PRE ENTREGA--------------------------------------------_/
 
@@ -103,8 +104,7 @@ URL: views/products
 
 Visualiza una lista de productos con el titulo y la imagen (Si tiene una) y si se le da click al nombre del producto, te dirige a otra página dónde se despliega más información del producto y aparece el botón de agregar al carrito (De momento no hace nada más que mostrar un console.log con el ID del producto.)
 
-/_DESAFIO ENTREGABLE: Login por formulario._/
-
+/_----------------------------------------------------------------DESAFIO ENTREGABLE: Login por formulario.-----------------------------------------------------------_/
 Rutas:
 
 GET /views/session
