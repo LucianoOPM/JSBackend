@@ -106,4 +106,19 @@ router.get('/session/perfil', (req, res) => {
     res.status(200).render('perfil', renderProfileObj)
 })
 
+router.get('/session/restorepass', async (req, res) => {
+    try {
+        const renderRestorePass = {
+            title: 'Restaurar contraseña',
+            script: 'sessions.js',
+            style: 'sessions.css',
+        }
+        res.status(200).render('restore', renderRestorePass)
+    } catch (error) {
+        if (error) {
+            return error
+        }
+    }
+})
+
 module.exports = router

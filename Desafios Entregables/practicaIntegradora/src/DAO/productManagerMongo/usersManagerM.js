@@ -1,17 +1,47 @@
+const { createHash, isValidPass } = require("../../utils/bcrypthash");
 const { userModel } = require("../models/usersModel");
 
 class UserManager {
     addUser = async (data) => {
         try {
-            const findUser = await userModel.findOne({ email: data.email })
+            const { first_name, last_name, email, age, password } = data
+            const newUser = {
+                first_name,
+                last_name,
+                email,
+                age,
+                password: createHash(password)
+            }
+            const findUser = await userModel.findOne({ email })
 
             if (findUser) {
                 throw new Error('El usuario ya existe.')
             }
 
-            return await userModel.create(data)
+            return await userModel.create(newUser)
         } catch (error) {
-            throw error
+            if (error) {
+                throw error
+            }
+        }
+    }
+
+    addUserGithub = async (data) => {
+        try {
+            const { name, email } = data
+
+            const findUser = await userModel.findOne({ email })
+            const newUser = {
+                first_name: name.split(' ')[0],
+                last_name: name.split(' ')[1],
+                email
+            }
+            if (findUser) {
+                return newUser
+            }
+            return await userModel.create(newUser)
+        } catch (error) {
+            if (error) throw error
         }
     }
 
@@ -20,12 +50,17 @@ class UserManager {
             const { email, password } = data
 
             const findUser = await userModel.findOne({ email })
+            if (!isValidPass(password, findUser)) {
+                throw new Error('El usuario o la contraseña con incorrectas')
+            }
+            /*
             if (!findUser) {
                 throw new Error('El correo no se encuentra en la base de datos')
             }
             if (findUser.password !== password) {
                 throw new Error('La contraseña es incorrecta')
             }
+            */
 
             return findUser
             /*             
@@ -38,10 +73,19 @@ class UserManager {
         }
     }
 
-    updateUser = async (changes, uid) => {
+    changePassword = async (userReq) => {
         try {
-            console.log(uid, changes)
-            return await userModel.updateOne({ _id: uid }, { $set: { changes } })
+            const { email, password } = userReq
+            const newPass = createHash(password)
+            const test = await userModel.findOneAndUpdate({ email }, { $set: { password: newPass } })
+            return test
+        } catch (error) {
+            return `ERROR: ${error}`
+        }
+    }
+    findUser = async (id) => {
+        try {
+            return await userModel.findById(id)
         } catch (error) {
             return `ERROR: ${error}`
         }

@@ -8,10 +8,14 @@ const session = require('express-session')
 const main = require('./routers/routes.js')
 const { webSocket } = require('./utils/socketIo.js')
 const { connectDB } = require('./config/DBConfig.js')
+const { initPassportMidd, initPassGitHub } = require('./config/passportConfig.js')
+const passport = require('passport')
 
 //instanciaciones
 const app = express()
 connectDB()
+initPassportMidd()
+initPassGitHub()
 
 //Configuraciones
 app.use(express.json())
@@ -33,6 +37,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+passport.use(passport.initialize())
+passport.use(passport.session())
 
 //routers
 app.use(main)

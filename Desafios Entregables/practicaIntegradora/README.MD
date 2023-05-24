@@ -122,3 +122,5 @@ Te permite registrarte en la página y una ves que te registres, te redirige al 
 GET /views/products
 
 No muestra nada si el usuario no está logueado te redirige a el inicio de sesion, y una ves adentro, te permite cerrar sesión.
+
+/_--------------------------------------------------------------------------Refactor de login---------------------------------------------------------------------------_/
