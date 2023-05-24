@@ -3,6 +3,13 @@ Linea 5: Primera pre entrega.
 Linea 47: Segunda pre entrega
 Linea 106: Login por formulario
 
+/_-------------------------------------------------------------IMPORTANTE_-------------------------------------------------/
+
+TO START: npm run dev
+Base de datos: Mongo de manera local
+nombre de la base de datos: 'ecommerce'
+colecciones: 'carts', 'messages', 'products', 'sessions', 'usuarios'
+
 /_------------------------------------------------------PRIMERA PRE ENTREGA--------------------------------------------_/
 
 ¿Cómo usar?
@@ -124,3 +131,10 @@ GET /views/products
 No muestra nada si el usuario no está logueado te redirige a el inicio de sesion, y una ves adentro, te permite cerrar sesión.
 
 /_--------------------------------------------------------------------------Refactor de login---------------------------------------------------------------------------_/
+
+Al registrarte mediante el formulario, generas una contraseña, que siendo revisada en la base de datos, se hashea, y te dirige automaticamente a la página de login cuando la cuenta fue creada correctamente, si no, la página se mantiene en la página del registro para que lo intentes nuevamente.
+
+Si el logueo es exitoso, te dirige a la página de products, si no, se queda en la página de login para que lo intentes nuevamente.
+
+Al registrarte con github, toma los nombres del perfil y el email que este en el perfil (tiene que estar publico el email en el perfil) y los registra en la base de datos
+Al hacer login mediante github, si todo sale bien, te dirige a la página de los productos.
