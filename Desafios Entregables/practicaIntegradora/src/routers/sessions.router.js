@@ -4,7 +4,8 @@ const passport = require('passport')
 const router = Router()
 const manager = new UserManager()
 
-/* router.post('/registro', async (req, res) => {
+/* 
+router.post('/registro', async (req, res) => {
     try {
         await manager.addUser(req.body)
         res.redirect('/views/session/login')
@@ -13,36 +14,8 @@ const manager = new UserManager()
             res.redirect('/views/session/register')
         }
     }
-}) */
-
-router.post('/registro', passport.authenticate('register', { failureRedirect: '/views/session/register', successRedirect: '/views/session/login' }), async (req, res) => {
-    try {
-        res.send({
-            status: 'success',
-            msg: 'Registro exitoso'
-        })
-    } catch (error) {
-        if (error) return error
-    }
-})
-router.post('/login', passport.authenticate('login', { failureRedirect: '/views/session/login' }), async (req, res) => {
-    try {
-        if (!req.user) return res.status(401).send({ status: 'Error', msg: 'No se encontró al usuario.' })
-        req.session.user = {
-            first_name: req.user.first_name,
-            last_name: req.user.last_name,
-            email: req.user.email
-        }
-        if (req.user.email === 'adminCoder@coder.com') {
-            req.session.user.rol = 'admin'
-            return res.redirect('/views/products')
-        }
-        req.session.user.rol = 'user'
-        res.redirect('/views/products')
-    } catch (error) {
-        if (error) return error
-    }
-})
+}) 
+*/
 
 // router.post('/login', async (req, res) => {
 //     try {
@@ -66,6 +39,35 @@ router.post('/login', passport.authenticate('login', { failureRedirect: '/views/
 //         }
 //     }
 // })
+
+//passport local
+router.post('/registro', passport.authenticate('register', { failureRedirect: '/views/session/register', successRedirect: '/views/session/login' }), async (req, res) => {
+    try {
+        res.send({
+            status: 'success',
+            msg: 'Registro exitoso'
+        })
+    } catch (error) {
+        if (error) return error
+    }
+})
+router.post('/login', passport.authenticate('login', { failureRedirect: '/views/session/login' }), async (req, res) => {
+    try {
+        req.session.user = {
+            first_name: req.user.first_name,
+            last_name: req.user.last_name,
+            email: req.user.email
+        }
+        if (req.user.email === 'adminCoder@coder.com') {
+            req.session.user.rol = 'admin'
+            return res.redirect('/views/products')
+        }
+        req.session.user.rol = 'user'
+        res.redirect('/views/products')
+    } catch (error) {
+        return `${error}`
+    }
+})
 
 router.post('/logout', async (req, res) => {
     try {

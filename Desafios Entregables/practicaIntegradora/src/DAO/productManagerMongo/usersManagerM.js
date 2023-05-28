@@ -34,12 +34,14 @@ class UserManager {
             const newUser = {
                 first_name: name.split(' ')[0],
                 last_name: name.split(' ')[1],
-                email
+                email,
+                password: ""
             }
             if (findUser) {
                 return newUser
             }
-            return await userModel.create(newUser)
+            await userModel.create(newUser)
+            return newUser
         } catch (error) {
             if (error) throw error
         }
@@ -50,6 +52,7 @@ class UserManager {
             const { email, password } = data
 
             const findUser = await userModel.findOne({ email })
+            if (!findUser) throw new Error('No se encuentra el usuario')
             if (!isValidPass(password, findUser)) {
                 throw new Error('El usuario o la contraseña con incorrectas')
             }
@@ -69,7 +72,7 @@ class UserManager {
             } 
             */
         } catch (error) {
-            throw error
+            throw error.message
         }
     }
 

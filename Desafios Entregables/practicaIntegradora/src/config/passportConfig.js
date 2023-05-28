@@ -39,7 +39,7 @@ const initPassportMidd = () => {
 
             return done(null, addUser)
         } catch (error) {
-            return done(error)
+            return done(null, false)
         }
 
 
@@ -67,11 +67,10 @@ const initPassportMidd = () => {
                 email: username,
                 password
             }
-            const test = await manager.loginUser(userData)
-            if (!test) return done(null, false)
-            done(null, test)
+            const user = await manager.loginUser(userData)
+            done(null, user)
         } catch (error) {
-            if (error) return done(error)
+            return done(null, false)
         }
     }))
 }
@@ -84,17 +83,19 @@ const initPassGitHub = () => {
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             const createUser = await manager.addUserGithub(profile._json)
-            if (!createUser) return done(null, false)
-
             return done(null, createUser)
         } catch (error) {
-            if (error) return done(error)
+            if (error) return done(null, false)
         }
     }))
 
     passport.serializeUser((user, done) => {
         try {
-            done(null, user.email)
+            if (user.email === 'adminCoder@coder.com') {
+                return user.rol = 'admin'
+            }
+            user.rol = 'user'
+            done(null, user)
         } catch (error) {
             if (error) return done(error)
         }

@@ -28,8 +28,11 @@ router.get('/products', auth, async (req, res) => {
         return res.status(500).send(error)
     }
 })
-router.get('/products/:pid', async (req, res) => {
+router.get('/products/:pid', auth, async (req, res) => {
     try {
+        if (!req.session.user) {
+            return res.redirect('/views/session/login')
+        }
         const product = await mongoManager.getProduct(req.params)
         const object = {
             pageTitle: "producto",
@@ -48,7 +51,6 @@ router.get('/products/:pid', async (req, res) => {
 
 router.get('/session', auth, async (req, res) => {
     try {
-        //falta poder cerrar sesión
         const renderSessionObj = {
             pageTitle: 'Sessions',
             script: 'sessions.js',
@@ -70,21 +72,24 @@ router.get('/session', auth, async (req, res) => {
     }
 })
 
-router.get('/session/register', auth, (req, res) => {
-    const renderRegisterObj = {
-        title: 'registro',
-        script: 'sessions.js',
-        style: 'sessions.css'
+router.get('/session/register', auth, async (req, res) => {
+    try {
+        const renderRegisterObj = {
+            title: 'registro',
+            script: 'sessions.js',
+            style: 'sessions.css'
+        }
+        if (req.session.user) {
+            return res.redirect('/views/products')
+        }
+        renderRegisterObj.showForm = true
+        res.status(200).render('register', renderRegisterObj)
+    } catch (error) {
+        return error.message
     }
-    if (req.session.user) {
-        renderRegisterObj.showForm = false
-        return res.render('register', renderRegisterObj)
-    }
-    renderRegisterObj.showForm = true
-    res.status(200).render('register', renderRegisterObj)
 })
 
-router.get('/session/login', auth, (req, res) => {
+router.get('/session/login', (req, res) => {
     const renderLoginObj = {
         title: 'Login',
         script: 'sessions.js',

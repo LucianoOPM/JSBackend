@@ -42,40 +42,49 @@ class ProductManagerMongo {
             }
             throw Error
         } catch (error) {
-            return `ERROR: ${error}`
+            if (error) throw error.message
         }
     }
-    updateProduct = async (pid, changes) => {
+    updateProduct = async (reqPid, changes) => {
         try {
+            const { pid } = reqPid
+            if (Object.keys(changes).length < 1) {
+                throw new Error("There's empty values to update")
+            }
             if (!pid) {
-                return `No se efectuaron los cambios porque no se entregó un ID`
+                throw new Error(`No se efectuaron los cambios porque no se entregó un ID`)
             }
-            if (!changes) {
-                return `No se efectuaron los cambios porque no hay cambios`
-            }
-            return await productModel.updateOne({ _id: pid }, changes)
+            const update = await productModel.findByIdAndUpdate(pid, { $set: changes })
+            return update
         } catch (error) {
-            return `ERROR: ${error}`
+            if (error) throw error.message
         }
     }
     createProduct = async (product) => {
         try {
-            if (!product) {
-                return `No hay un producto para agregar.`
+            const { title, description, price, code, stock, category } = product
+
+            if (!title || !description || !price || !code || !stock || !category) throw new Error("There's empty values")
+
+            const productAlreadyExists = await productModel.findOne({ code: product.code })
+            if (productAlreadyExists) {
+                throw new Error('Product already exists')
             }
+
             return await productModel.create(product)
         } catch (error) {
-            return `ERROR: ${error}`
+            if (error) throw error.message
         }
     }
-    deleteProduct = async (pid) => {
+    deleteProduct = async (productID) => {
         try {
-            if (!pid) {
-                return `No hay ID para eliminar el producto.`
-            }
+            const { pid } = productID
+            const pExists = await productModel.findById(pid)
+            if (!pExists) throw new Error("Products missmatches ID or doesn't exists")
+
             return await productModel.deleteOne({ _id: pid })
         } catch (error) {
-            return `ERROR: ${error}`
+            if (error) throw error.message
         }
     }
 }

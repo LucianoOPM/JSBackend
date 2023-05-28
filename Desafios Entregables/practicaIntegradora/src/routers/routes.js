@@ -8,18 +8,12 @@ const users = require('./usersRouter.js')
 const products = require("./product.router.js")
 const session = require('./sessions.router.js')
 
+router.use('/api/products', products)
 router.use('/views', views)
 router.use('/api/realtimeproducts', realtime)
-router.use('/api/products', products)
 router.use('/api/chat', chats)
 router.use('/api/carts', carts)
 router.use('/api/users', users)
 router.use('/api/session', session)
-/*
-TO DO
-'/products'
-'/products/pid'
-
-*/
 
 module.exports = router

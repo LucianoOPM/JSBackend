@@ -6,7 +6,9 @@
         <a href="/views/session/restorepass">Restaurar contraseña</a>
         {{else}}
         <a href="/views/session/perfil">Mi Perfil</a>
-        <a href="/views/session/logout">Cerrar sesión</a>
+        <form action="/api/session/logout" method="post">
+            <button>Cerrar sesion</button>
+        </form>
         {{/if}}
     </nav>
 </header>
