@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const { UserManager } = require('../DAO/productManagerMongo/usersManagerM')
 const passport = require('passport')
+const { generateToken, authToken } = require('../config/passportJWT')
 const router = Router()
 const manager = new UserManager()
 
@@ -68,6 +69,57 @@ router.post('/login', passport.authenticate('login', { failureRedirect: '/views/
         return `${error}`
     }
 })
+
+/*
+//passport JWT
+router.post('/login', async (req, res) => {
+    try {
+        //const userDB = await manager.loginUser(req.body)
+        const userDB = generateToken({
+            "first_name": "Ana Paula",
+            "last_name": "Montiel Bustos",
+            "edad": 24
+        })
+        //Recordar, no pasar datos sensibles como la palabra secreta o la contraseña del usuario a la hora de generar el token.
+        res.send({
+            status: 'success',
+            payload: userDB
+        })
+    } catch (error) {
+        if (error) {
+            res.status(401).redirect('/views/session/login')
+        }
+    }
+})
+router.post('/registro', async (req, res) => {
+    try {
+        const newUser = generateToken({
+            'first_name': 'Luciano',
+            'last_name': 'Perez',
+            'edad': 23
+        })
+        res.send({
+            status: 'success',
+            payload: newUser
+        })
+    } catch (error) {
+        if (error) {
+            res.redirect('/views/session/register')
+        }
+    }
+})
+
+router.get('/pruebas', authToken, async (req, res) => {
+    try {
+        res.send({
+            payload: "autorizado"
+        })
+    } catch (error) {
+        return error
+    }
+})
+*/
+
 
 router.post('/logout', async (req, res) => {
     try {
