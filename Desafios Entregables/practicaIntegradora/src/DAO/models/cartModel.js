@@ -10,14 +10,16 @@ const cartSchema = new Schema({
         index: true
     },
     products: [{
-        idProduct: {//cambiar por product
+        product: {
             type: Schema.Types.ObjectId,
             ref: 'products'
         },
-        qty: Number,
+        qty: {
+            type: Number,
+            default: 1
+        },
         _id: false
-    }
-    ]
+    }]
 })
 
 cartSchema.plugin(paginate)
