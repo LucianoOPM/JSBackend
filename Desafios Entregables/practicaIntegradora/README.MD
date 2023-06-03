@@ -34,21 +34,15 @@ localhost:8080/chats
 
 Es un chat en el cual puedes colocar un nombre (el que sea) y poder conversar desde otro cliente contigo mismo (para experimentar la esquizofrenia). La base de datos guarda el nombre con el que te registraste y va agregando en la base de datos los mensajes que hayas escrito.
 
-POST: localhost:8080/carts
+POST: localhost:8080/api/carts
 
 Cuando se posiciona en este endpoint genera un cart automaticamente con un ID creado por mongo, cada ves que lanza una peticion de post desde postman.
 
-GET: localhost:8080/carts?cid=iddelcarrito
-GET: localhost:8080/carts?limit=numero
-GET: localhost:8080/carts
-
-Si se implementa una query mediante get en carts, traerá los carritos según el limite o el ID del carrito que se le otorgue, si no se le otorga un query o el query no coincide con algunos de los dos, por defecto nos traerá todos los carritos
-
-PUT localhost:8080/carts/IDMONGODELCARRITO/product/CLAVEDELPRODUCTO
+PUT localhost:8080/api/carts/IDMONGODELCARRITO/product/CLAVEDELPRODUCTO
 
 Revisa si el carrito tiene un producto con el ID generado, si no lo tiene, lo agrega, y en caso de que ya lo tenga, simplemente suma en 1 su valor. De momento no está implementado con los ID products de la base de datos, así que se podría agregar cualquier producto este o no en la base de datos.
 
-DELETE: localhost:8080/carts/IDMONGOCARRITO
+DELETE: localhost:8080/api/carts/IDMONGOCARRITO
 
 Elimina un carrito completo
 
@@ -81,19 +75,16 @@ URL: api/carts/:cid
 Recibe un array de objetos por body y actualiza el carrito pasado por req.params según el ID del carrito. el array tiene el siguiente formato:
 
 Lo que esta entre comillas no se cambia.
-"inserts": [
-{"idProduct": IDMONGO, "qty": Numero},
-{"idProduct": IDMONGO, "qty": Numero},
-{"idProduct": IDMONGO, "qty": Numero},
-etc....
+[
+{"product": IDMONGO, "qty": Numero},
+{"product": IDMONGO, "qty": Numero},
+{"product": IDMONGO, "qty": Numero},
 ]
 
 URL: api/carts/:cid/products/:pid
 Actualiza unicamente la cantidad pasada por el body del producto en el carrito especificado por params.
 FORMATO:
-{
-"qty": Numero
-}
+{"qty": Numero}
 
 /DELETE de los productos del carrito
 
