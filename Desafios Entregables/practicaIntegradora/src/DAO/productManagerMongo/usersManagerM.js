@@ -1,3 +1,4 @@
+const { generateToken } = require("../../config/passportJWT");
 const { createHash, isValidPass } = require("../../utils/bcrypthash");
 const { userModel } = require("../models/usersModel");
 
@@ -11,6 +12,9 @@ class UserManager {
                 email,
                 age,
                 password: createHash(password)
+            }
+            if (email === "adminCoder@coder.com") {
+                newUser.role = 'ADMIN'
             }
             const findUser = await userModel.findOne({ email })
 
@@ -51,12 +55,21 @@ class UserManager {
         try {
             const { email, password } = data
 
+            //jwt
+            /*
+            const { password: pass, ...userData } = await userModel.findOne({ email })//Buscamos el user
+            const { password: pass2, ...datos } = userData._doc //sacamos los datos sensibles del usuario, como la contraseña y otras cosas
+            const access_token = generateToken(datos)//generamos el token del usuario con sus datos, sin incluid los datos sensibles como contraseñas y demás 
+            */
+
+            //passportLocal 
             const findUser = await userModel.findOne({ email })
             if (!findUser) throw new Error('No se encuentra el usuario')
             if (!isValidPass(password, findUser)) {
                 throw new Error('El usuario o la contraseña con incorrectas')
             }
             /*
+            formulario
             if (!findUser) {
                 throw new Error('El correo no se encuentra en la base de datos')
             }
@@ -66,6 +79,7 @@ class UserManager {
             */
 
             return findUser
+            //Retornamos el token
             /*             
             if (!limit) {
             return await userModel.find({}).limit(10).skip(page * 10).sort({ [query]: sort })
@@ -88,7 +102,8 @@ class UserManager {
     }
     findUser = async (id) => {
         try {
-            return await userModel.findById(id)
+            return await userModel.findOne({ email: id })
+            //return await userModel.findById(id)
         } catch (error) {
             return `ERROR: ${error}`
         }
