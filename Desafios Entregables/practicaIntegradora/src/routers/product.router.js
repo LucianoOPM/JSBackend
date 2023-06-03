@@ -29,6 +29,21 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:pid', async (req, res) => {
+    try {
+        const product = await mongoManager.getProduct(req.params)
+        res.status(200).send({
+            status: 'success',
+            payload: product
+        })
+    } catch (error) {
+        if (error) return res.status(500).send({
+            status: 'error',
+            payload: error
+        })
+    }
+})
+
 router.post('/', async (req, res) => {
     try {
         const newProduct = await mongoManager.createProduct(req.body)
