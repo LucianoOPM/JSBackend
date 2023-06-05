@@ -3,25 +3,34 @@ const { createHash, isValidPass } = require("../../utils/bcrypthash");
 const { userModel } = require("../models/usersModel");
 
 class UserManager {
+    #calcularEdad = (birthDate) => {
+        const actualDate = new Date()
+        const userBirth = new Date(birthDate)
+
+        let age = actualDate.getFullYear() - userBirth.getFullYear()
+        return age
+    }
+
     addUser = async (data) => {
         try {
-            const { first_name, last_name, email, age, password } = data
+            const { first_name, last_name, email, password, age } = data
+            const userAge = this.#calcularEdad(age)
+            if (!first_name || !last_name || !email || !password) throw new Error('Error al registrar los campos.')
+
+            const validUser = await userModel.findOne({ email: email })
+
+            if (validUser) throw new Error('User already exists')
+
             const newUser = {
                 first_name,
                 last_name,
                 email,
-                age,
-                password: createHash(password)
+                password: createHash(password),
+                age: userAge
             }
-            if (email === "adminCoder@coder.com") {
-                newUser.role = 'ADMIN'
+            if (email === 'adminCoder@coder.com') {
+                newUser.role = 'admin'
             }
-            const findUser = await userModel.findOne({ email })
-
-            if (findUser) {
-                throw new Error('El usuario ya existe.')
-            }
-
             return await userModel.create(newUser)
         } catch (error) {
             if (error) {
@@ -56,37 +65,13 @@ class UserManager {
             const { email, password } = data
 
             //jwt
-            /*
-            const { password: pass, ...userData } = await userModel.findOne({ email })//Buscamos el user
-            const { password: pass2, ...datos } = userData._doc //sacamos los datos sensibles del usuario, como la contraseña y otras cosas
-            const access_token = generateToken(datos)//generamos el token del usuario con sus datos, sin incluid los datos sensibles como contraseñas y demás 
-            */
+            const { _doc } = await userModel.findOne({ email })//Buscamos el user
+            const { password: pass, ...restUser } = _doc
+            if (!isValidPass(password, _doc)) throw new Error('El usuario o la contraseña son incorrectas.')
 
-            //passportLocal 
-            const findUser = await userModel.findOne({ email })
-            if (!findUser) throw new Error('No se encuentra el usuario')
-            if (!isValidPass(password, findUser)) {
-                throw new Error('El usuario o la contraseña con incorrectas')
-            }
-            /*
-            formulario
-            if (!findUser) {
-                throw new Error('El correo no se encuentra en la base de datos')
-            }
-            if (findUser.password !== password) {
-                throw new Error('La contraseña es incorrecta')
-            }
-            */
-
-            return findUser
-            //Retornamos el token
-            /*             
-            if (!limit) {
-            return await userModel.find({}).limit(10).skip(page * 10).sort({ [query]: sort })
-            } 
-            */
+            return generateToken(restUser)
         } catch (error) {
-            throw error.message
+            throw error
         }
     }
 
