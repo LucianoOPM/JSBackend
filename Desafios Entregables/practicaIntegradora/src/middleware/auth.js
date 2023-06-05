@@ -1,7 +1,9 @@
 const auth = (req, res, next) => {
-    if (req.session.user && req.url == '/session/login') {
-        return res.redirect('/views/products')
-    }
+    console.log(req.session);
+    /* const { passport } = req.session
+    if (!passport) {
+        return res.redirect('/views/session/login')
+    } */
     next()
 }
 
