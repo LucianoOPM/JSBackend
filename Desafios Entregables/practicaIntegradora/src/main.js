@@ -10,6 +10,7 @@ const { webSocket } = require('./utils/socketIo.js')
 const { connectDB } = require('./config/DBConfig.js')
 const { initPassportMidd, initPassGitHub } = require('./config/passportConfig.js')
 const passport = require('passport')
+const { initPassport } = require('./passport-JWT/passport.config.js')
 
 //instanciaciones
 const app = express()
@@ -25,6 +26,7 @@ app.set('views', `${__dirname}/views`)
 app.set('view engine', 'handlebars')
 app.use('/static', express.static(`${__dirname}/public`))
 app.use(cookieParser('Mensaje secreto'))
+//trabajando con JWT session no se utiliza
 app.use(session({
     store: create({
         mongoUrl: 'mongodb://127.0.0.1:27017/ecommerce',
@@ -37,6 +39,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+//SI SE USA JWT, NO USAR SESSION
+initPassport()
 passport.use(passport.initialize())
 passport.use(passport.session())
 
