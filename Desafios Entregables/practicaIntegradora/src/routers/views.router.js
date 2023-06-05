@@ -2,17 +2,15 @@ const { Router } = require('express')
 const router = Router()
 const mongoManager = require('../DAO/productManagerMongo/productMMongo.js')
 const { auth } = require('../middleware/auth.js')
+const Manager = require('../DAO/productManagerMongo/cartManagerM.js')
 
 //const { ProductManager } = require('../DAO/productsManager/proManJSON.js')
 //const path = './src/DAO/productsManager/data.json'
 //const Manager = new ProductManager(path)
 
-
+/*Cambiar el auth por el autenticador de JWT*/
 router.get('/products', auth, async (req, res) => {
     try {
-        if (!req.session.user) {
-            return res.redirect('/views/session/login')
-        }
         const { first_name, last_name, rol } = req.session.user
         let { docs } = await mongoManager.getProduct({})
         const object = {
@@ -28,6 +26,8 @@ router.get('/products', auth, async (req, res) => {
         return res.status(500).send(error)
     }
 })
+
+/*Cambiat auth por el autenticador de JWT*/
 router.get('/products/:pid', auth, async (req, res) => {
     try {
         if (!req.session.user) {
@@ -46,6 +46,20 @@ router.get('/products/:pid', auth, async (req, res) => {
             status: `ERROR`,
             error
         })
+    }
+})
+
+router.get('/carts/:cid', async (req, res) => {
+    try {
+        const { docs } = await Manager.getCarts(req.params)
+        const [cart] = docs
+        const viewCart = {
+            pageTitle: `Carrito #${req.params.cid}`,
+            renderCart: cart.products
+        }
+        res.render('cartView', viewCart)
+    } catch (error) {
+        return `ERROR: ${error}`
     }
 })
 
@@ -72,7 +86,9 @@ router.get('/session', auth, async (req, res) => {
     }
 })
 
-router.get('/session/register', auth, async (req, res) => {
+/*
+passport-local 
+router.get('/session/register', async (req, res) => {
     try {
         const renderRegisterObj = {
             title: 'registro',
@@ -82,13 +98,26 @@ router.get('/session/register', auth, async (req, res) => {
         if (req.session.user) {
             return res.redirect('/views/products')
         }
-        renderRegisterObj.showForm = true
+        res.status(200).render('register', renderRegisterObj)
+    } catch (error) {
+        return error.message
+    }
+}) 
+*/
+
+//jwt
+router.get('/session/register', async (req, res) => {
+    try {
+        const renderRegisterObj = {
+            title: 'registro',
+            script: 'sessions.js',
+            style: 'sessions.css'
+        }
         res.status(200).render('register', renderRegisterObj)
     } catch (error) {
         return error.message
     }
 })
-
 router.get('/session/login', (req, res) => {
     const renderLoginObj = {
         title: 'Login',
@@ -98,7 +127,7 @@ router.get('/session/login', (req, res) => {
     res.status(200).render('login', renderLoginObj)
 })
 
-router.get('/session/perfil', (req, res) => {
+router.get('/session/perfil', auth, (req, res) => {
     const { first_name, last_name, age } = req.session.user
     const renderProfileObj = {
         title: 'Perfil',
@@ -123,6 +152,20 @@ router.get('/session/restorepass', async (req, res) => {
         if (error) {
             return error
         }
+    }
+})
+
+//Pruebas de JWT desde el localstorage.
+router.get('/test', async (req, res) => {
+    try {
+        const renderLogin = {
+            title: 'titulo',
+            script: 'viewProducts.js',
+            style: 'products.css'
+        }
+        res.render('perfil', renderLogin)
+    } catch (error) {
+        if (error) return error.message
     }
 })
 
