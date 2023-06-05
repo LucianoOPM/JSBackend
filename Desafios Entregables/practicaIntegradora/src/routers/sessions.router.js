@@ -2,6 +2,8 @@ const { Router } = require('express')
 const { UserManager } = require('../DAO/productManagerMongo/usersManagerM')
 const passport = require('passport')
 const { generateToken, authToken } = require('../config/passportJWT')
+const passportCall = require('../passport-JWT/passport.call')
+const authorization = require('../passport-JWT/authJWT')
 const router = Router()
 const manager = new UserManager()
 
@@ -41,6 +43,7 @@ router.post('/registro', async (req, res) => {
 //     }
 // })
 
+/* 
 //passport local
 router.post('/registro', passport.authenticate('register', { failureRedirect: '/views/session/register', successRedirect: '/views/session/login' }), async (req, res) => {
     try {
@@ -69,43 +72,44 @@ router.post('/login', passport.authenticate('login', { failureRedirect: '/views/
         return `${error}`
     }
 })
+*/
 
-/*
+
 //passport JWT
-router.post('/login', async (req, res) => {
+router.post('/registro', async (req, res) => {
     try {
-        //const userDB = await manager.loginUser(req.body)
-        const userDB = generateToken({
-            "first_name": "Ana Paula",
-            "last_name": "Montiel Bustos",
-            "edad": 24
-        })
-        //Recordar, no pasar datos sensibles como la palabra secreta o la contraseña del usuario a la hora de generar el token.
-        res.send({
+        const { first_name, role, email } = await manager.addUser(req.body)
+        res.status(201).send({
             status: 'success',
-            payload: userDB
+            user: { first_name, role, email }
         })
     } catch (error) {
         if (error) {
-            res.status(401).redirect('/views/session/login')
+            res.status(409).send({
+                status: 'Error',
+                payload: error.message
+            })
+            //res.redirect('/views/session/register')
         }
     }
 })
-router.post('/registro', async (req, res) => {
+
+router.post('/login', async (req, res) => {
     try {
-        const newUser = generateToken({
-            'first_name': 'Luciano',
-            'last_name': 'Perez',
-            'edad': 23
-        })
-        res.send({
+        const userDB = await manager.loginUser(req.body)
+        //Recordar, no pasar datos sensibles como la palabra secreta o la contraseña del usuario a la hora de generar el token.
+        res.cookie('coderCookieToken', userDB, {
+            maxAge: 60 * 60 * 100,
+            httpOnly: true//Con esta configuración evitamos que las cookies solo sean accesibles mediante peticiones http
+        }).send({
             status: 'success',
-            payload: newUser
+            message: 'Login success'
         })
     } catch (error) {
-        if (error) {
-            res.redirect('/views/session/register')
-        }
+        if (error) return res.status(401).send({
+            status: 'Error',
+            payload: error.message
+        })
     }
 })
 
@@ -118,7 +122,17 @@ router.get('/pruebas', authToken, async (req, res) => {
         return error
     }
 })
-*/
+
+//passportCall es una función creada en la carpeta passport-JWT dónde pasamos la estrategia que estamos utilizando que es la encargada de manejar los errores (en caso de tener errores).
+//Passportcall ya cumple con validaciones si el token viene corrupto o no viene el token del logueo.
+//authorization es un middleware que valida el rol del usuario, en caso de que haya vistas dependiendo el rol del usuario.
+router.get('/current', passportCall('current'), authorization('user'), async (req, res) => {
+    try {
+        res.send(req.user)
+    } catch (error) {
+        return error
+    }
+})
 
 
 router.post('/logout', async (req, res) => {
