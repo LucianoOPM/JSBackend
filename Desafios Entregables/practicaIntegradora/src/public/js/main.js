@@ -1,32 +1,43 @@
 const socket = io()
 const form = document.querySelector("#addForm")
 const deleteProduct = document.querySelector("#deleteProducts")
+const addBtn = document.querySelector('#addProducts')
 
-form.addEventListener('submit', (e) => {
+addBtn.addEventListener('click', (e) => {
     e.preventDefault()
 
-    const [title, description, price, thumbnail, code, stock, status, category] = form
+    const formValues = new FormData()
 
-    socket.emit('client:addProduct', {
-        'title': title.value,
-        'description': description.value,
-        'price': price.value,
-        'thumbnail': thumbnail.value,
-        'code': code.value,
-        'stock': stock.value,
-        'status': status.value === 'on' ? status.value = true : status.value = false,
-        'category': category.value
+    formValues.append("title", form.title.value)
+    formValues.append("description", form.description.value)
+    formValues.append("price", form.price.value)
+    formValues.append("thumbnail", form.thumbnail.files[0])
+    formValues.append("code", form.code.value)
+    formValues.append("stock", form.stock.value)
+    formValues.append("status", form.status.value == "on" ? true : false)
+    formValues.append("category", form.category.value)
+
+
+    fetch('http://localhost:8080/api/v2/products', {
+        method: 'POST',
+        body: formValues
     })
+        .then(res => res.json())
+        .then(res => socket.emit("client:newProducts", res))
+        .catch(err => console.log(err))
+
 
     form.reset()
 })
 
-socket.on('server:products', (data) => {
+
+socket.on('server:renderProducts', async (data) => {
+    const { docs } = data
     let products = document.querySelector("#newProducts")
 
     let renderProducts = ''
 
-    for (let value of data) {
+    for (let value of docs) {
         renderProducts += `
         <h2>${value.title}</h2>
         <h3>${value.description}</h3>
@@ -39,6 +50,7 @@ socket.on('server:products', (data) => {
         `
     }
     products.innerHTML = renderProducts
+
 })
 
 const [idProduct, delButton] = deleteProduct
@@ -50,7 +62,15 @@ delButton.addEventListener('click', (e) => {
     const confirmar = confirm(`ATENCION!!!\n¿Esta seguro de eliminar el producto con ID: ${idProduct.value}?`)
 
     if (confirmar) {
-        socket.emit('client:deleteProduct', idProduct.value)
+        fetch(`http://localhost:8080/api/v2/products/${idProduct.value}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                return socket.emit('client:deleteProduct')
+            })
+            .catch(err => console.log(err))
     }
     deleteProduct.reset()
 })
