@@ -1,12 +1,20 @@
 <main>
     <div>
-        {{#each renderCart}}
-            <p>Producto: {{product.title}}</p>
-            <p>Descripción: {{product.description}}</p>
-            <p>Precio: {{product.price}}</p>
-            <p>Categoria: {{product.category}}</p>
-            <p>Cantidad en el carrito: {{qty}}</p>
-            <hr>
-        {{/each}}
+        {{log emptyCart}}
+        {{#if emptyCart}}
+            <h1>Empty Cart</h1>
+        {{else}}
+            {{#each renderCart}}
+                {{#each this.products}}
+                    <ul>
+                        <li>
+                            <h3>Producto: {{product.title}}</h3>
+                            <p>Descripcion: {{product.description}}</p>
+                            <p>Costo: {{product.price}}</p>
+                        </li>
+                    </ul>
+                {{/each}}
+            {{/each}}
+        {{/if}}
     </div>
 </main>
