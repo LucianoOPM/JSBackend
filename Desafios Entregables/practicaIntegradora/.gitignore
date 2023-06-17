@@ -4,5 +4,5 @@ node_modules/
 /src/routers/newUser.router.js
 /src/routers/pets.router.js
 /src/routers/sessionrouter.js
-TODO.txt
+TODO.md
 /src/process
