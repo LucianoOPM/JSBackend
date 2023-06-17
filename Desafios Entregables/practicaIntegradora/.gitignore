@@ -1,2 +1,8 @@
 node_modules/
-.env
+.env*
+/src/routers/dictionary.router.js
+/src/routers/newUser.router.js
+/src/routers/pets.router.js
+/src/routers/sessionrouter.js
+TODO.txt
+/src/process
