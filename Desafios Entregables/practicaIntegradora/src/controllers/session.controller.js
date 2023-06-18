@@ -30,10 +30,14 @@ class SessionController {
 
             const token = generateToken(user)
 
-            res.status(200).cookie('coderCookieToken', token, {
-                httpOnly: true,
-                maxAge: 60 * 60 * 1000
-            }).sendSuccess(`User logged success ${token}`)
+            res.status(200)
+                .cookie('coderCookieToken', token, {
+                    httpOnly: true,
+                    maxAge: 60 * 60 * 1000
+                })
+                .clearCookie("register")
+                .cookie('logged', true, { maxAge: 60 * 60 * 1000, httpOnly: true })
+                .sendSuccess(`User logged success ${token}`)
         } catch (error) {
             res.status(500).sendServerError(error.message)
         }
@@ -41,7 +45,10 @@ class SessionController {
 
     logout = async (req, res) => {
         try {
-            res.clearCookie('coderCookieToken').sendSuccess('Logout exitoso')
+            res
+                .clearCookie('coderCookieToken')
+                .clearCookie("logged")
+                .redirect('/login')
         } catch (error) {
             res.status(500).sendServerError(error.message)
         }
