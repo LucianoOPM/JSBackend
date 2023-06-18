@@ -1,14 +1,12 @@
 const jwt = require('jsonwebtoken');
-const { SECRET_KEY } = require('../config/config.js')
 
-//const JWT_PRIVATE_KEY = 'PalabraJWTSecreta';
 //secret_key contendría la clave secreta
 //La palabra secreta será un código secreto que estará en nuestros enviroment variables, está comprobará que las peticiones vengan con la misma palabra secreta, de no ser así, podemos notar que la petición viene corrupta
 
 //Esta función recibe al usuario y genera un token junto a la palabra secreta y al usuario, además se le puede colocar un tiempo de expiración.
 const generateToken = (user) => {
     //El token generado utiliza un método de JWT, el cual recibe 3 argumentos, el primer argumento es un objeto con la información del usuario, el segundo parametro es la llave privada con la cual se realizará el cifrado, y el 3er argumento es el tiempo de expiración
-    const token = jwt.sign({ user }, /* JWT_PRIVATE_KEY */SECRET_KEY, { expiresIn: '24h' })
+    const token = jwt.sign({ user }, process.env.JWT_SECRET_KEY, { expiresIn: '24h' })
     return token
 }
 
@@ -34,7 +32,7 @@ const authToken = async (req, res, next) => {
 
 
         //Jsonwebtoken se encarga de verificar el token con el siguiente método, el cual recibe 3 argumentos, el token, la palabra secreta y una callback
-        jwt.verify(token, /* JWT_PRIVATE_KEY */SECRET_KEY, (error, credential) => {
+        jwt.verify(token, process.env.JWT_SECRET_KEY, (error, credential) => {
             if (error) return res.status(403).send({
                 status: 'error',
                 payload: 'No autorizado'
