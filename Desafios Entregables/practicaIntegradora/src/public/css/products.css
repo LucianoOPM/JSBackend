@@ -43,7 +43,21 @@ h5 a{
     right: 100%;
 }
 
+.buy-button{
+    height: 30px;
+    margin: 2px;
+    padding: 0 10px;
+}
+
 .page-buttons{
     position:relative;
     left: 50%;
+}
+
+.img-size{
+    width: 300px;
+    height: 200px;
+    position: relative;
+    left: 2%;
+    top: 5%;
 }
