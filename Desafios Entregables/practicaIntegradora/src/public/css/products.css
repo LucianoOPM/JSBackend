@@ -1,37 +1,49 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-@font-face {
-    font-family: "google-font";
-    src: url('../assets/ShadowsIntoLight-Regular.ttf');
-}
-.products__more-img{
-    width: 100px;
-}
-.add{
-    border: 1px solid red;
-}
-.add__form{
-    width: 300px;
-    position: relative;
-    left: 43%;
-    text-align: center;
+body{
+    background-color: #A0C49D;
 }
 
-.add__form input{
-    margin-top: 5px;
-    padding: 5px;
-    display: block;
-    position: relative;
-    left: 19%;
+.custom-navbar{
+    background-color: #E1ECC8;
+    border-bottom: 3px solid black;
+    height: 100px;
 }
 
-.container__checkbox{
-    position: relative;
-    left: 29%;
+nav div{
+    display: inline-block;
 }
 
-img{
-    width: 150px;
+nav input[type='search']{
+    width: 500px;
+}
+
+nav span{
+    position: relative;
+    left: 10%;
+}
+
+.custom-nav-ul{
+    position: relative;
+    left: 10%;
+}
+
+.products{
+    background-color: #C4D7B2;
+    position: relative;
+    left: 33%;
+    border: 2px solid black;
+}
+
+h5 a{
+    text-decoration: none;
+    color: black;
+}
+
+.login-button{
+    position: relative;
+    right: 100%;
+}
+
+.page-buttons{
+    position:relative;
+    left: 50%;
 }

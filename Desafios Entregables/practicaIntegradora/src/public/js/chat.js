@@ -15,6 +15,7 @@ Swal.fire({
     allowOutsideClick: false,
     allowEscapeKey: false
 }).then(result => {
+    /*Recuperar las cookies desde aqui y enviarlo en un post o un get dependiendo si está registrado o no.*/
     newUser = result.value
     socket.emit('client:createUser', newUser)
 })
