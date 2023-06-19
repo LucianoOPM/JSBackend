@@ -23,9 +23,9 @@
         </form>
       </div>
       <div>
-        <a href="/login"><button
-            class="btn btn-outline-success login-button"
-          >Iniciar Sesion</button></a>{{! Si hay una sesion activa, cerrar sesion }}
+        <a href="/login">
+          <button class="btn btn-outline-success login-button">Iniciar Sesion</button>
+        </a>{{! Si hay una sesion activa, cerrar sesion }}
         {{!-- <h3>Hola! {{first_name}} {{last_name}} ROL: {{rol}}</h3>  Si está logueado mostrar mensaje si está logueado y es admin mostrar el rol, si no, no mostrar nada--}}
       </div>
     </div>
@@ -36,10 +36,10 @@
   {{#each docs}}
     <div class="card mb-3 mt-3 products" style="max-width: 750px;">
       <div class="row g-0">
-        <div class="col-md-4 mt-5">
+        <div class="col-md-4">
           <img
             src="{{this.thumbnail}}"
-            class="img-fluid rounded-start"
+            class="img-fluid rounded-start img-size"
             alt="{{this.category}}"
           />
         </div>
@@ -51,14 +51,9 @@
             <p class="card-text">Price: {{this.price}}</p>
             <p class="card-text"><small class="text-body-secondary">Disponibles:
                 {{this.stock}}</small></p>
-            <input
-              type="number"
-              name="quantity"
-              id="qty-{{this.code}}"
-              min="1"
-              max="{{this.stock}}"
-            />
-            <button class="btn btn-outline-success">Comprar</button>
+            <a href="/products/{{this.id}}"><button
+                class="btn btn-outline-success buy-button"
+              >Comprar</button></a>
           </div>
         </div>
       </div>
@@ -67,7 +62,7 @@
   {{/each}}
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
-      <li class="page-item {{!-- disabled --}}">
+      <li class="page-item">{{! disabled }}
         <a
           class="page-link"
           href="{{prevLink}}"
