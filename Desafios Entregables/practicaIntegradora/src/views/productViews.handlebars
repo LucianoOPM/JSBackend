@@ -1,18 +1,18 @@
 <header>
     <div class="title__text--container">
-        <h1 class="title__text"> <a href="/views/products">E-Commerce</a></h1>
+        <h1 class="title__text">E-Commerce</h1>
     </div>
     <div class="search-bar">
        <form method="get">
         <label for="search">Buscar Producto:</label>
-            <input type="search" name="search" id="search">
-            <button class="search-btn"><i class="bi bi-search"></i></button>
+            <input readonly type="search" name="search" id="search">
+            <button disabled class="search-btn"><i class="bi bi-search"></i></button>
        </form>
     </div>
     <nav class="navigation">
-        <a href="/api/carts">CARRITO</a>
-        <a href="/api/chat">CONTACTO</a>
-        <a href="/api/realtimeproducts">PRODUCTOS</a>
+        <a href="/carts">CARRITO</a>{{!-- Si no está logueado redirigir a login o register, si está registrado acceder--}}
+        <a href="/chat">CONTACTO</a>{{!-- Sólo valido si el usuario está logueado --}}
+        <a href="/realtimeproducts">PRODUCTOS</a>{{!-- {{#if user.role == "admin" mostrar, si no, pos no}} --}}
     </nav>
 </header>
 <main>
@@ -28,7 +28,7 @@
     </div>
         <form action="#" id="newProduct">
             <div class="add-button-container">
-                <button class="add-button" id="addButton" value="{{product._id}}"><i class="bi bi-cart"></i></button>
+                <button disabled class="add-button" id="addButton" value="{{product._id}}"><i class="bi bi-cart"></i></button>
             </div>
         </form>
     </div>

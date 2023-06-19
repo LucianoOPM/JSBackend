@@ -3,7 +3,7 @@
 </header>
 <main>
 <div class="add">
-        <form class="add__form" id="addForm" method="post" enctype="multipart/form-data">
+        <form class="add__form" id="addForm">
             <label for="title">Titulo del producto</label>
                 <input type="text" name="title" placeholder="EJ: Producto 1" required>
 
@@ -28,9 +28,9 @@
 
             <label for="category">Categoria del producto: </label>
                 <input type="text" name="category" placeholder="EJ: Procesador" required>
-            
-            <button>Agregar</button>
+
         </form>
+            <button id="addProducts">Agregar</button>
     </div>
     <div id="newProducts">
         {{#each docs}}
@@ -47,8 +47,8 @@
     <div class="delete">
         <h1>Eliminar productos</h1>
         <form id="deleteProducts" class="add__form">
-            <input type="text" name="id" id="eraseProduct" placeholder="id del articulo a eliminar" min="0">
-            <button id="deleteButton">ELIMINAR</button>
+            <input type="text" name="id" id="eraseProduct" placeholder="id del articulo a eliminar">
+            <button id="deleteButton" style="background-color: red; color:black;">ELIMINAR</button>
         </form>
     </div>
 
