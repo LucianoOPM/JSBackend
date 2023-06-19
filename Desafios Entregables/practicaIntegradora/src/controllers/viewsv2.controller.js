@@ -34,8 +34,7 @@ class ViewsController {
             const productView = {
                 title: "E-Commerce",
                 product,
-                style: "home.css"
-                /*Script: "viewProducts.js*/
+                style: "product.css"
             }
 
             res.status(200).render('productViews', productView)
