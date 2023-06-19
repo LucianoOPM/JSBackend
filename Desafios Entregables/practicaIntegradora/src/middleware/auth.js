@@ -1,12 +1,8 @@
-const auth = (req, res, next) => {
-    console.log(req.session);
-    const { passport } = req.session
-    if (!passport) {
-        return res.redirect('/views/session/login')
-    }
+const isLogged = (req, res, next) => {
+    if (req.cookies["logged"]) return res.redirect('/products')
     next()
 }
 
 module.exports = {
-    auth
+    isLogged
 }
