@@ -83,7 +83,12 @@ class SessionController {
             return res.status(200).cookie('coderCookieToken', token, {
                 httpOnly: true,
                 maxAge: 60 * 60 * 1000
-            }).sendSuccess(`User logged: ${token}`)//Generamos una cookie con sus datos no vulnerables.
+            })
+                .cookie('logged', true, {
+                    httpOnly: true,
+                    maxAge: 60 * 60 * 1000
+                })
+                .redirect('/products')//Generamos una cookie con sus datos no vulnerables.
         } catch (error) {
             if (error) return error
         }
