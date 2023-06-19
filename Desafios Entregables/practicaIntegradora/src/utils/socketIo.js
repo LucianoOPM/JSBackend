@@ -1,76 +1,50 @@
-//const { ProductManager } = require('../DAO/productsManager/proManJSON.js')
-//const path = './src/DAO/productsManager/data.json'
-//const manager = new ProductManager(path)
-
-const MMongo = require('../DAO/productManagerMongo/productMMongo.js')
 const chatMongo = require('../DAO/productManagerMongo/chatManagerM.js')
+const { productService } = require('../services/index.js')
+const querySearch = require('./querySearch.js')
 
 const webSocket = (io) => {
     io.on('connection', async socket => {
         try {
+            const query = querySearch({ limit: 30, sort: -1 }, "products")
+            let products = await productService.getProduct(query)
+            io.emit('server:renderProducts', products)
 
-            //Socket de los productos.
-            socket.on('client:addProduct', async (data) => {
-                await MMongo.createProduct(data)
-                let { docs } = await MMongo.getProduct({})
-                socket.emit('server:products', docs)
+            socket.on('client:newProducts', async _ => {
+                products = await productService.getProduct(query)
+                io.emit('server:renderProducts', products)
             })
 
-            socket.on('client:deleteProduct', async (data) => {
-                await MMongo.deleteProduct(data)
-                let { docs } = await MMongo.getProduct({})
-                socket.emit('server:products', docs)
-            })
-
-            //Socket del chat
-
-            socket.on('client:createUser', async (data) => {
-                await chatMongo.newChat({ user: data })
-            })
-
-            socket.on('client:newMesage', async (data) => {
-                await chatMongo.addMessage(data)
-
-                const mensajes = []
-                const fetchMessage = await chatMongo.readLastMessage(data.userName)
-                mensajes.push(fetchMessage)
-
-                io.emit('server:chatHistory', mensajes)
+            socket.on('client:deleteProduct', async _ => {
+                products = await productService.getProduct(query)
+                socket.emit('server:renderProducts', products)
             })
         } catch (error) {
-            return `ERROR: ${error}`
+            return error.message
         }
     })
 }
 
-module.exports = {
-    webSocket
+const chatSocket = io => {
+    io.on('connection', async socket => {
+        //Socket del chat
+
+        socket.on('client:createUser', async (data) => {
+            await chatMongo.newChat({ user: data })
+        })
+
+        socket.on('client:newMesage', async (data) => {
+            await chatMongo.addMessage(data)
+
+            const mensajes = []
+            const fetchMessage = await chatMongo.readLastMessage(data.userName)
+            mensajes.push(fetchMessage)
+
+            io.emit('server:chatHistory', mensajes)
+        })
+    })
 }
 
-/*  
-[
-    {
-        id: mongoID,
-        usuario: nombre del usuario,
-        mensajes:[
-        {
-            fecha: date.Now(),
-            mensaje: 
-        },
-        {
-            fecha: date.Now(),
-            mensaje:
-        }
-    },
-    {
-        id: mongoID,
-        usuario: nombre del usuario,
-        mensajes:[
-            {
-                fecha: date.Now(),
-                mensaje:
-            }
-        ]
-    }
-]
-*/
+module.exports = {
+    webSocket,
+    chatSocket
+}
