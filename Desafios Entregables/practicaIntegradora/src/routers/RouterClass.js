@@ -15,7 +15,6 @@ class RouterClass {
     handlePolicies = policies => (req, res, next) => {
         if (policies[0] === 'PUBLIC') return next()//Si la ruta es publica, permite el acceso a toda las personas.
         const authHeader = req.headers.authorization//Si la ruta no es publica, se extrae la autorización del header(creo que es del usuario.)
-        console.log(authHeader);
 
         if (!authHeader) return res.send({ status: 'error', error: 'Unauthorized' })
         //authorization: 'BEARER asdasda21d3a3(token)'
