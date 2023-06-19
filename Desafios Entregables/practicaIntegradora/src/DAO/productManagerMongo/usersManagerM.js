@@ -3,35 +3,10 @@ const { createHash, isValidPass } = require("../../utils/bcrypthash");
 const { userModel } = require("../models/usersModel");
 
 class UserManager {
-    #calcularEdad = (birthDate) => {
-        const actualDate = new Date()
-        const userBirth = new Date(birthDate)
-
-        let age = actualDate.getFullYear() - userBirth.getFullYear()
-        return age
-    }
 
     addUser = async (data) => {
         try {
-            const { first_name, last_name, email, password, age } = data
-            const userAge = this.#calcularEdad(age)
-            if (!first_name || !last_name || !email || !password) throw new Error('Error al registrar los campos.')
-
-            const validUser = await userModel.findOne({ email: email })
-
-            if (validUser) throw new Error('User already exists')
-
-            const newUser = {
-                first_name,
-                last_name,
-                email,
-                password: createHash(password),
-                age: userAge
-            }
-            if (email === 'adminCoder@coder.com') {
-                newUser.role = 'admin'
-            }
-            return await userModel.create(newUser)
+            return await userModel.create(data)
         } catch (error) {
             if (error) {
                 throw error
@@ -39,24 +14,11 @@ class UserManager {
         }
     }
 
-    addUserGithub = async (data) => {
+    getUsers = async (query) => {
         try {
-            const { name, email } = data
-
-            const findUser = await userModel.findOne({ email })
-            const newUser = {
-                first_name: name.split(' ')[0],
-                last_name: name.split(' ')[1],
-                email,
-                password: ""
-            }
-            if (findUser) {
-                return newUser
-            }
-            await userModel.create(newUser)
-            return newUser
+            return await userModel.paginate(query[0], query[1])
         } catch (error) {
-            if (error) throw error
+            throw error
         }
     }
 
@@ -85,16 +47,32 @@ class UserManager {
             return `ERROR: ${error}`
         }
     }
+
     findUser = async (id) => {
         try {
-            return await userModel.findOne({ email: id })
-            //return await userModel.findById(id)
+            if (id.includes('@')) return await userModel.findOne({ email: id })//Si el ID contiene un @ es porque es un email y efectua la busqueda por email
+            return await userModel.findById(id).lean()//Si no, efectua la busqueda por ID del usuario.
         } catch (error) {
             return `ERROR: ${error}`
         }
     }
+
+    updateUser = async (id, body) => {
+        try {
+            await userModel.findOneAndUpdate({ _id: id }, { $set: body })
+            return await userModel.findOne({ _id: id })
+        } catch (error) {
+            throw error
+        }
+    }
+
+    deleteUser = async (uid) => {
+        try {
+            return await userModel.findOneAndDelete({ _id: uid })
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
-module.exports = {
-    UserManager
-}
+module.exports = UserManager

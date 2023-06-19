@@ -1,12 +1,12 @@
 const { Schema, model } = require('mongoose')
+const paginate = require('mongoose-paginate-v2')
 
 const collection = 'usuarios'
 
 const usersSchema = new Schema({
     first_name: {
         type: String,
-        required: true,
-        index: true
+        required: true
     },
     last_name: {
         type: String,
@@ -14,7 +14,8 @@ const usersSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        index: true
     },
     cartID: {
         type: Schema.Types.ObjectId,
@@ -24,12 +25,42 @@ const usersSchema = new Schema({
         type: String,
         default: 'user'
     },
-    age: Number,
-    password: String
+    birthdate: {
+        type: Date,
+    },
+    password: {
+        type: String
+    }
 })
 
+usersSchema.plugin(paginate)
 const userModel = model(collection, usersSchema)
 
 module.exports = {
     userModel
 }
+
+/*
+[
+    {
+        uid: userID,
+        first_name: nombre,
+        last_name: apellido,
+        email: email,
+        cartID: asdasdsadasdasd213213,
+        role: customer,
+        birthDate: 08/05/1996,
+        password:asdasda
+    },
+    {
+        uid: userID,
+        first_name: nombre,
+        last_name: apellido,
+        email: email,
+        cartID: asdasdsadasdasd213213,
+        role: customer,
+        birthDate: 08/05/1996,
+        password:asdasda
+    }
+]
+*/
