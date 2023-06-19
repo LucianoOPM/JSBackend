@@ -12,16 +12,15 @@ class ViewsController {
 
             const { docs, nextLink, prevLink } = pagination(req, products)
 
-            const test = {
+            const productsRender = {
                 title: "E-Commerce",
                 docs,
-                style: "home.css",
+                style: "products.css",
                 nextLink,
                 prevLink
-                /*Agregar el script*/
             }
 
-            res.status(200).render('home', test)
+            res.status(200).render('products', productsRender)
         } catch (error) {
             res.sendServerError(error.message)
         }
@@ -50,7 +49,8 @@ class ViewsController {
             /*Si ya está logueado redirigir a products o home*/
             const loginView = {
                 title: "Iniciar sesion",
-                style: "sessions.css"
+                style: "login.css",
+                script: "login.js"
             }
             res.status(200).render('login', loginView)
         } catch (error) {
