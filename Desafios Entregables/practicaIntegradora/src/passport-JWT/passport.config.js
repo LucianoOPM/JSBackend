@@ -28,10 +28,9 @@ const initPassport = () => {
         //Obtiene el codigo jwt de la peticion y ejecuta el método de extraccion de la funcion cookieExtractors
         jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
         //Decodea al usuario extraido de la cookie según la palabra con la que se haya codeado, en este caso la palabra es "PalabraJWTSecreta"
-        secretOrKey: SECRET_KEY//Esta palabra debe estar privada desde el .env
+        secretOrKey: process.env.JWT_SECRET_KEY//Esta palabra debe estar privada desde el .env
     }, async (jwt_payload, done) => {
         try {
-            console.log(jwt_payload);
             //Si todo lo anterior resulta bien, ejecuta la callback pasando el usuario ya decodificado de vuelta a "passport.call.js"
             return done(null, jwt_payload)
         } catch (error) {
