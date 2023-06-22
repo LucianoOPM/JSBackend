@@ -6,3 +6,9 @@ node_modules/
 /src/routers/sessionrouter.js
 TODO.md
 /src/process
+/src/DTO/ContactDTO.js
+/src/controllers/contacts.js
+/src/DAO/MongoDAO/models/contactModel.js
+/src/DAO/MongoDAO/contactDAO.js
+/src/repositories/contact.repository.js
+/src/routers/contacts.v2.js
