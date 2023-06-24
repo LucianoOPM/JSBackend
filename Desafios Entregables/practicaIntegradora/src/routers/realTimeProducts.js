@@ -4,7 +4,7 @@ const productManager = require('../DAO/productManagerMongo/productMMongo.js')
 
 router.get('/', async (req, res) => {
     try {
-        const { docs } = await productManager.getProduct({})
+        const { docs } = await productManager.getProduct()
         const object = {
             title: "Agregar productos",
             script: "main.js",

@@ -9,7 +9,8 @@ class UsersRouter extends RouterClass {
         this.get('/:UID', ['PUBLIC'], user.getById)//Funciona
         this.post('/', ['PUBLIC'], user.post)//Funciona
         this.put('/:UID', ['PUBLIC'], user.put)//Funciona
-        this.delete('/:UID', ['PUBLIC'], user.delete)//Funciona//Cuando elimines al usuario, elimina su carrito
+        this.post('/restore', ['PUBLIC'], user.restore)
+        this.delete('/:UID', ['PUBLIC'], user.delete)//Funciona
     }
 }
 module.exports = UsersRouter

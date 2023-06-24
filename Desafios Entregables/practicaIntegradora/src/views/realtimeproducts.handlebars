@@ -1,57 +1,91 @@
 <header class="title">
-    <h1 class="title__text">Agregar productos</h1>
+  <h1 class="title__text">Agregar productos</h1>
 </header>
 <main>
-<div class="add">
-        <form class="add__form" id="addForm">
-            <label for="title">Titulo del producto</label>
-                <input type="text" name="title" placeholder="EJ: Producto 1" required>
+  <div class="add">
+    <form class="add__form" id="addForm">
+      <label for="title">Titulo del producto</label>
+      <input type="text" name="title" placeholder="EJ: Producto 1" required />
 
-            <label for="description">Descripción del producto</label>
-                <input type="text" name="description" placeholder="EJ: 2 GB de RAM, 1 TB de espacio, etc..." required>
+      <label for="description">Descripción del producto</label>
+      <input
+        type="text"
+        name="description"
+        placeholder="EJ: 2 GB de RAM, 1 TB de espacio, etc..."
+        required
+      />
 
-            <label for="price">Precio del producto $:</label>
-                <input type="number" name="price" placeholder="EJ: 1000" min="0" required>
-            
-            <label for="thumbnail">Imagen del producto</label>
-                <input type="file" name="thumbnail" placeholder="EJ: https://placeholder/img.png" id="formFile">
-            
-            <label for="code">Código del producto:</label>
-                <input type="text" name="code" placeholder="EJ: PRO-RYZEN-5-3600" required>
-            <label for="stock">Cantidades disponibles:</label>
-                <input type="number" name="stock" placeholder="EJ: 5" min="0" required>
+      <label for="price">Precio del producto $:</label>
+      <input
+        type="number"
+        name="price"
+        placeholder="EJ: 1000"
+        min="0"
+        required
+      />
 
-            <label for="status">Status:</label>
-                <div class="container__checkbox" required>
-                    <input type="checkbox" name="status">
-                </div>
+      <label for="thumbnail">Imagen del producto</label>
+      <input
+        type="file"
+        name="thumbnail"
+        placeholder="EJ: https://placeholder/img.png"
+        id="formFile"
+      />
 
-            <label for="category">Categoria del producto: </label>
-                <input type="text" name="category" placeholder="EJ: Procesador" required>
+      <label for="code">Código del producto:</label>
+      <input
+        type="text"
+        name="code"
+        placeholder="EJ: PRO-RYZEN-5-3600"
+        required
+      />
+      <label for="stock">Cantidades disponibles:</label>
+      <input type="number" name="stock" placeholder="EJ: 5" min="0" required />
 
-        </form>
-            <button id="addProducts">Agregar</button>
-    </div>
-    <div id="newProducts">
-        {{#each docs}}
-            <h2>Producto: {{this.title}}</h2>
-            <h3>Descripción: {{this.description}}</h3>
-            <p>ID: {{this._id}}</p>
-            <p>Costo: {{this.price}}</p>
-            <p>Disponible: {{this.status}}</p>
-            <img src="{{this.thumbnail}}">
-            <hr>
-        {{/each}}
-    </div>
-    
-    <div class="delete">
-        <h1>Eliminar productos</h1>
-        <form id="deleteProducts" class="add__form">
-            <input type="text" name="id" id="eraseProduct" placeholder="id del articulo a eliminar">
-            <button id="deleteButton" style="background-color: red; color:black;">ELIMINAR</button>
-        </form>
-    </div>
+      <label for="status">Status:</label>
+      <div class="container__checkbox" required>
+        <input type="checkbox" name="status" />
+      </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/static/js/{{script}}"></script>
+      <label for="category">Categoria del producto: </label>
+      <input
+        type="text"
+        name="category"
+        placeholder="EJ: Procesador"
+        required
+      />
+
+    </form>
+    <button id="addProducts">Agregar</button>
+  </div>
+  <div id="newProducts">
+    {{#each docs}}
+      <h2>Producto: {{this.title}}</h2>
+      <h3>Descripción: {{this.description}}</h3>
+      <p>ID: {{this._id}}</p>
+      <p>Costo: {{this.price}}</p>
+      <p>Disponible: {{this.status}}</p>
+      <img src="{{this.thumbnail}}" />
+      <hr />
+    {{/each}}
+  </div>
+
+  <div class="delete">
+    <h1>Eliminar productos</h1>
+    <form id="deleteProducts" class="add__form">
+      <input
+        type="text"
+        name="id"
+        id="eraseProduct"
+        placeholder="id del articulo a eliminar"
+      />
+      <button
+        id="deleteButton"
+        style="background-color: red; color:black;"
+      >ELIMINAR</button>
+    </form>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/static/js/{{script}}"></script>
 </main>

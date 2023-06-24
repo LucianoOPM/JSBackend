@@ -19,7 +19,8 @@ const ProductsV2 = require('./product.router.v2.js')
 const UserRouterV2 = require('./users.router.v2.js');
 const SessionRouterV2 = require('./session.router.v2.js')
 const ViewsRouterV2 = require('./views.router.v2.js')
-const CartRouterV2 = require('./carts.v2.router.js')
+const CartRouterV2 = require('./carts.v2.router.js');
+const ContactsRouter = require('./contacts.v2.js');
 
 //API V2 Instances
 const productsv2 = new ProductsV2()
@@ -27,6 +28,7 @@ const usersv2 = new UserRouterV2()
 const sessionv2 = new SessionRouterV2()
 const viewsv2 = new ViewsRouterV2()
 const cartsv2 = new CartRouterV2()
+const contacts = new ContactsRouter()
 
 //API v2 endpoints
 /*Agregar un middleware que genere una cookie de guest*/
@@ -35,6 +37,7 @@ router.use('/api/v2/products', uploader.single('thumbnail'), productsv2.getRoute
 router.use('/api/v2/users', usersv2.getRouter())//Funciona
 router.use('/api/v2/session', sessionv2.getRouter())
 router.use('/api/v2/carts', cartsv2.getRouter())//Funciona
+router.use('/api/contacts', contacts.getRouter())
 
 /* 
 DEPRECATED

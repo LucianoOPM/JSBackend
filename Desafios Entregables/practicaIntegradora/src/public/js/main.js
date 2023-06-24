@@ -2,6 +2,8 @@ const socket = io()
 const form = document.querySelector("#addForm")
 const deleteProduct = document.querySelector("#deleteProducts")
 const addBtn = document.querySelector('#addProducts')
+const cookies = document.cookie
+console.log(cookies);
 
 addBtn.addEventListener('click', (e) => {
     e.preventDefault()

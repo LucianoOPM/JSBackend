@@ -11,3 +11,4 @@ TODO.md
 /src/DAO/MongoDAO/contactDAO.js
 /src/repositories/contact.repository.js
 /src/routers/contacts.v2.js
+/.vscode

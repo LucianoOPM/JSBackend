@@ -6,7 +6,7 @@ const { RouterClass } = require("./RouterClass");
 const views = new ViewsController()
 
 class ViewsRouter extends RouterClass {
-
+    /*QUIEN PUEDE ACCEDER A LAS VISTAS*/
     init() {
         /*Views de products*/
         this.get('/products', ['PUBLIC'], views.products)//Funciona

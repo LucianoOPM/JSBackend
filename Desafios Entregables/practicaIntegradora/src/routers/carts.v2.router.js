@@ -6,6 +6,7 @@ const cart = new CartController()
 class CartRouter extends RouterClass {
     init() {
         this.get('/:CID', ['PUBLIC'], cart.get)//Funciona
+        this.post('/:CID/purchase', ['PUBLIC'], cart.purchase)
         this.put('/:CID', ['PUBLIC'], cart.addProducts)//Funciona
         this.put('/:CID/product/:PID', ['PUBLIC'], cart.updateProduct)//Funciona
         this.delete('/:CID', ['PUBLIC'], cart.delete)//Funciona

@@ -7,19 +7,22 @@ const cookieParser = require('cookie-parser')
 //const session = require('express-session')
 const main = require('./routers/routes.js')
 const { webSocket, chatSocket } = require('./utils/socketIo.js')
-const { connectDB } = require('./config/DBConfig.js')
+//const { connectDB } = require('./config/DBConfig.js')
 //const { initPassportMidd, /* initPassGitHub */ } = require('./config/passportConfig.js')
 const passport = require('passport')
 const { initPassport } = require('./passport-JWT/passport.config.js')
+const cors = require('cors')
 
 //instanciaciones
 const app = express()
-connectDB()
+initPassport()
+//connectDB()
 //initPassportMidd()
 /* initPassGitHub() */
 
 //Configuraciones
 app.use(express.json())
+app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.engine('handlebars', hbs.engine())
 app.set('views', `${__dirname}/views`)
@@ -27,7 +30,6 @@ app.set('view engine', 'handlebars')
 app.use('/static', express.static(`${__dirname}/public`))
 //SI SE USA JWT, NO USAR SESSION
 app.use(cookieParser("S1gn3d Co0k13"))
-initPassport()
 passport.use(passport.initialize())
 
 //trabajando con JWT session no se utiliza

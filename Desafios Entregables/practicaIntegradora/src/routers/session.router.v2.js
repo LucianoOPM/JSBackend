@@ -1,4 +1,6 @@
+const { authToken } = require("../config/passportJWT");
 const SessionController = require("../controllers/session.controller");
+const authorization = require("../passport-JWT/authJWT");
 const passportCall = require("../passport-JWT/passport.call");
 const { RouterClass } = require("./RouterClass");
 
@@ -12,6 +14,7 @@ class SessionRouter extends RouterClass {
         this.get('/githubcallback', ['PUBLIC'], passportCall('github', {
             failureRedirect: '/login'
         }), session.github)
+        this.get('/current', ['PUBLIC'], /*cuando vienen de headers --> authToken y cuando vienen de cookies--> passportCall('jwt'),*/ authorization('ADMIN'), session.currentSession)
     }
 }
 

@@ -8,9 +8,9 @@ class ProductRouter extends RouterClass {
     init() {
         this.get('/', ['PUBLIC'], product.get)//Funciona
         this.get('/:pid', ['PUBLIC'], product.getById)//Funciona
-        this.post('/', ['PUBLIC'], product.post)//Funciona
-        this.put('/:pid', ['PUBLIC'], product.update)//Funciona
-        this.delete('/:pid', ['PUBLIC'], product.delete)//Funciona
+        this.post('/', ['PUBLIC'], product.post)//Funciona ADMIN
+        this.put('/:pid', ['PUBLIC'], product.update)//Funciona ADMIN
+        this.delete('/:pid', ['PUBLIC'], product.delete)//Funciona ADMIN
     }
 }
 

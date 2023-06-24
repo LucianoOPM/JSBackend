@@ -1,6 +1,5 @@
 const { generateToken } = require("../config/passportJWT")
 const { userService, cartService } = require("../services")
-const ageCalculator = require("../utils/ageCalculator")
 const { isValidPass } = require("../utils/bcrypthash")
 
 class SessionController {
@@ -16,16 +15,16 @@ class SessionController {
 
             const test = isValidPass(req.body.password, checkEmail)
 
+
             if (!test) return res.status(400).sendServerError('User or password are wrong')
 
             const user = {
-                ID: checkEmail._id.toString(),
+                ID: checkEmail._id,
                 first_name: checkEmail.first_name,
                 last_name: checkEmail.last_name,
                 role: checkEmail.role,
-                age: ageCalculator(checkEmail.birthdate),
                 email: checkEmail.email,
-                cartID: checkEmail.cartID.toString()
+                cartID: checkEmail.cartID
             }
 
             const token = generateToken(user)
@@ -35,7 +34,6 @@ class SessionController {
                     httpOnly: true,
                     maxAge: 60 * 60 * 1000
                 })
-                .clearCookie("register")
                 .cookie('logged', true, { maxAge: 60 * 60 * 1000, httpOnly: true })
                 .sendSuccess(`User logged success ${token}`)
         } catch (error) {
@@ -91,6 +89,15 @@ class SessionController {
                 .redirect('/products')//Generamos una cookie con sus datos no vulnerables.
         } catch (error) {
             if (error) return error
+        }
+    }
+
+    currentSession = (req, res) => {
+        try {
+            console.log(req.user)
+            res.status(200).sendSuccess('conexion con current')
+        } catch (error) {
+            return res.status(500).sendServerError(error.message)
         }
     }
 }

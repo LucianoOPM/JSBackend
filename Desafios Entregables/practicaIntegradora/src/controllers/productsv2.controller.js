@@ -46,10 +46,17 @@ class ProductController {
 
     post = async (req, res) => {
         try {
-            const { title, description, price, code, stock, category, status } = req.body
+            let { title, description, price, code, stock, category, status } = req.body
+            if (status) {
+                status = Boolean(status)
+            }
             const fileLocation = req.file ? fileUrl(req.file) : null
 
             if (!title || !price || !code || !stock || !category || !description) return res.status(400).sendServerError("There's empty values")
+
+            const findProduct = await productService.getProductByCode(code)
+
+            if (findProduct) return res.status(401).sendUserError('Product already exists')
 
             const newProduct = {
                 title,
@@ -58,12 +65,12 @@ class ProductController {
                 code,
                 stock: Number(stock),
                 category,
-                status: Boolean(status),
+                status,
                 thumbnail: fileLocation ? [fileLocation] : []
             }
             const addProduct = await productService.createProduct(newProduct)
 
-            res.status(200).sendSuccess(addProduct)
+            res.status(200).sendSuccess({ message: 'Product created', addProduct })
         } catch (error) {
             res.status(500).sendServerError(error.message)
         }
@@ -71,10 +78,11 @@ class ProductController {
 
     update = async (req, res) => {
         try {
-            if (!isValidObjectId(req.params.pid)) return res.status(404).sendServerError("Param isn't an valid ID")
+            const { pid } = req.params
+            if (!isValidObjectId(pid)) return res.status(404).sendServerError("Param isn't an valid ID")
             if (Object.keys(req.body).length < 1) return res.status(400).sendServerError("There's empty values to update")
 
-            const updateProduct = await productService.updateProduct(req.params, req.body)
+            const updateProduct = await productService.updateProduct(pid, req.body)
 
             res.status(200).sendSuccess({
                 updateProduct,
@@ -89,6 +97,11 @@ class ProductController {
         try {
             const { pid } = req.params
             if (!isValidObjectId(pid)) return res.status(400).sendServerError("Product ID isn't a correct value")
+
+            const findProduct = await productService.getProductById(pid)
+
+            if (!findProduct) return res.status(400).sendUserError('Product missmatch')
+
             const deleteProduct = await productService.deleteProduct(pid)
             res.status(200).sendSuccess({
                 deleteProduct,

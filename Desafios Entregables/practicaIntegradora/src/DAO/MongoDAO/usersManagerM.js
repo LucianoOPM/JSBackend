@@ -1,6 +1,4 @@
-const { generateToken } = require("../../config/passportJWT");
-const { createHash, isValidPass } = require("../../utils/bcrypthash");
-const { userModel } = require("../models/usersModel");
+const { userModel } = require("../MongoDAO/models/usersModel.js");
 
 class UserManager {
 
@@ -22,26 +20,9 @@ class UserManager {
         }
     }
 
-    loginUser = async (data) => {
+    changePassword = async ({ email, newPassword }) => {
         try {
-            const { email, password } = data
-
-            //jwt
-            const { _doc } = await userModel.findOne({ email })//Buscamos el user
-            const { password: pass, ...restUser } = _doc
-            if (!isValidPass(password, _doc)) throw new Error('El usuario o la contraseña son incorrectas.')
-
-            return generateToken(restUser)
-        } catch (error) {
-            throw error
-        }
-    }
-
-    changePassword = async (userReq) => {
-        try {
-            const { email, password } = userReq
-            const newPass = createHash(password)
-            const test = await userModel.findOneAndUpdate({ email }, { $set: { password: newPass } })
+            const test = await userModel.findOneAndUpdate({ email }, { $set: { password: newPassword } })
             return test
         } catch (error) {
             return `ERROR: ${error}`

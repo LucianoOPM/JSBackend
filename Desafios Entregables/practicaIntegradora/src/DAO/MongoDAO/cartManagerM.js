@@ -1,4 +1,4 @@
-const { cartModel } = require('../models/cartModel.js')
+const { cartModel } = require('../MongoDAO/models/cartModel.js')
 
 class CartManagerM {
     newCart = async (cart) => {

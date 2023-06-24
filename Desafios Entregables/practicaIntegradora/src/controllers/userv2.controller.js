@@ -56,10 +56,10 @@ class UserController {
     post = async (req, res) => {
         try {
             //Extrae los valores del req.body
-            const { first_name, last_name, email, password, age } = req.body
+            const { first_name, last_name, email, password, birthdate } = req.body
 
             //Si faltan algunos de estos valores, retorna un error
-            if (!first_name || !last_name || !email || !password || !age) return res.status(401).sendServerError('Empty Values')
+            if (!first_name || !last_name || !email || !password || !birthdate) return res.status(401).sendServerError('Empty Values')
 
             const emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -72,32 +72,27 @@ class UserController {
 
             //Si no está, genera un carrito nuevo y se le asigna al usuario.
             const { _id } = await cartService.newCart()
-            const newUser = {
+
+            //Guarda el usuario en la base de datos
+            const registeredUser = await userService.addUser({
                 first_name,
                 last_name,
                 email,
                 cartID: _id,
-                birthdate: age,
-                password: createHash(password)
-            }
-
-            //Validacion de que si el usuario registrado es "admin coder" se le asigna el rol de admin
-            if (email === 'adminCoder@coder.com') {
-                newUser.role = 'ADMIN'
-            }
-
-            //Guarda el usuario en la base de datos
-            const createdUser = await userService.addUser(newUser)
+                birthdate,
+                password: createHash(password),
+                role: email == "adminCoder@coder.com" ? "ADMIN" : "user" //Validacion de que si el usuario registrado es "admin coder" se le asigna el rol de admin
+            })
 
             //Genera un token
             const token = generateToken({
-                first_name: createdUser.first_name,
-                last_name: createdUser.last_name,
-                email: createdUser.email,
-                cartID: createdUser.cartID.toString(),
-                role: createdUser.role,
-                birthdate: createdUser.birthdate,
-                UID: createdUser._id.toString()
+                first_name: registeredUser.first_name,
+                last_name: registeredUser.last_name,
+                email: registeredUser.email,
+                CID: registeredUser.cartID,
+                age: registeredUser.age,
+                role: registeredUser.role,
+                UID: registeredUser.IDUser
             })
 
             //Entrega el token a la cookie "coderCookieToken" y le asigna la configuración
@@ -115,8 +110,8 @@ class UserController {
             //Valores que se permitirán cambiar al usuario
             const acceptedBody = ["first_name", "last_name", "email", "role", "birthdate"]
 
-            //Extrae el UID de los params
-            const { UID } = req.params
+            //Extrae el UID y el body del req
+            const { params: { UID }, body } = req
             //extrae las key del req.body
             const bodyKeys = Object.keys(req.body)
             //Valida que las keys del req.body esten dentró de los keys permitidos
@@ -128,11 +123,11 @@ class UserController {
             if (validBody) return res.status(400).sendServerError("Some keys doesn't match with allowed key user values")//Valida que las modificaciones implementadas sean validas.
 
             //Efectua los cambio y se extraen las propiedades que se utilizarán para generar el token (No extraer la constraseña o información sensible)
-            const { first_name, last_name, email, cartID, role, birthdate, _id } = await userService.updateUser(UID, req.body)
+            const { first_name, last_name, email, cartID, role, age, IDUser } = await userService.updateUser(UID, body)
 
             //Genera el token
-            const updatedUser = { UID: _id.toString(), first_name, last_name, email, role, birthdate, cartID: cartID.toString() }
-            const token = generateToken(updatedUser)
+
+            const token = generateToken({ first_name, last_name, email, cartID, role, age, IDUser })
 
             //Guarda el nuevo token generado en las cookies
             res.status(200).cookie('coderCookieToken', token, {
@@ -147,7 +142,7 @@ class UserController {
     delete = async (req, res) => {
         try {
             //extrae el UID de los params
-            const { UID } = req.params
+            const { params: { UID } } = req
 
             //Valida que el UID sea un objectID válido
             if (!isValidObjectId(UID)) return res.status(400).sendServerError('UID is not a valid ObjectId')
@@ -163,6 +158,24 @@ class UserController {
             res.status(200).sendSuccess('User deleted successfully')
         } catch (error) {
             res.status(500).sendServerError(error.message)
+        }
+    }
+
+    restore = async (req, res) => {
+        try {
+            const { body: { email, password } } = req
+
+            const foundEmail = await userService.findUser(email)
+
+            if (!foundEmail) return res.status(400).sendUserError("Error.")
+
+            const newPassword = createHash(password)
+
+            await userService.changePassword({ email, newPassword })
+
+            res.status(200).sendSuccess('password changed successfully')
+        } catch (error) {
+            res.status(500).sendServerError(error.messsage)
         }
     }
 }

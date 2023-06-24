@@ -1,4 +1,4 @@
-const chatMongo = require('../DAO/productManagerMongo/chatManagerM.js')
+const chatMongo = require('../DAO/MongoDAO/chatManagerM.js')
 const { productService } = require('../services/index.js')
 const querySearch = require('./querySearch.js')
 

@@ -75,7 +75,7 @@ const initPassportMidd = () => {
     }))
 }
 
-const initPassGitHub = () => {
+/* const initPassGitHub = () => {
     passport.use('github', new GithubStrategy({
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
@@ -105,9 +105,9 @@ const initPassGitHub = () => {
         done(null, user)
     })
 
-}
+} */
 
 module.exports = {
     initPassportMidd,
-    initPassGitHub
+    /* initPassGitHub */
 }

@@ -108,6 +108,15 @@ class CartController {
             res.status(500).sendServerError(error.message)
         }
     }
+
+    purchase = (req, res) => {
+        try {
+            res.status(200).sendSuccess('hola')
+        } catch (error) {
+            console.log(error.message);
+            return res.status(500).sendServerError(error.message)
+        }
+    }
 }
 
 module.exports = CartController

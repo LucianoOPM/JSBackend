@@ -1,4 +1,4 @@
-const { messageModel } = require('../models/chatModel.js')
+const { messageModel } = require('../MongoDAO/models/chatModel.js')
 
 class ChatManagerMongo {
     newChat = async (user) => {

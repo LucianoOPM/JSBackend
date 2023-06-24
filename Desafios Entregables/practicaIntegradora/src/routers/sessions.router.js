@@ -1,11 +1,13 @@
 const { Router } = require('express')
-const { UserManager } = require('../DAO/productManagerMongo/usersManagerM')
+const UserManager = require('../DAO/productManagerMongo/usersManagerM')
+const router = Router()
+const manager = new UserManager()
+
 const passport = require('passport')
 const { generateToken, authToken } = require('../config/passportJWT')
 const passportCall = require('../passport-JWT/passport.call')
 const authorization = require('../passport-JWT/authJWT')
-const router = Router()
-const manager = new UserManager()
+
 
 /* 
 router.post('/registro', async (req, res) => {
@@ -100,7 +102,7 @@ router.post('/login', async (req, res) => {
         if (email === 'adminCoder@coder.com') {
             req.body.role = "admin"
             const token = generateToken(req.body)
-            return res.cookie('coderCookieToken', token, {
+            return res.cookie('coderCookieToken'/*Nombre de la cookie dónde se guardará el token del usuario.*/, token, {
                 maxAge: 60 * 60 * 100,
                 httpOnly: true
             }).send({
@@ -139,7 +141,7 @@ router.get('/pruebas', authToken, async (req, res) => {
 //passportCall es una función creada en la carpeta passport-JWT dónde pasamos la estrategia que estamos utilizando que es la encargada de manejar los errores (en caso de tener errores).
 //Passportcall ya cumple con validaciones si el token viene corrupto o no viene el token del logueo.
 //authorization es un middleware que valida el rol del usuario, en caso de que haya vistas dependiendo el rol del usuario.
-router.get('/current', passportCall('current'), authorization('user'), async (req, res) => {
+router.get('/current', passportCall('jwt'), authorization('admin'), async (req, res) => {
     try {
         res.send(req.user)
     } catch (error) {
@@ -173,15 +175,38 @@ router.post('/restore', async (req, res) => {
 })
 
 //github
-router.get('/github', passport.authenticate('github', {
+router.get('/github', passportCall('github', {
     scope: ['user: email']
 }))
-router.get('/githubcallback', passport.authenticate('github', {
+router.get('/githubcallback', passportCall('github', {
     failureRedirect: '/views/session/login'
 }), async (req, res) => {
     try {
-        req.session.user = req.user
-        res.redirect('/views/products')
+        const { name, email, password } = req.user
+        const findUser = await manager.findUser(email)
+
+        if (!findUser) {//Si no encuentra el usuario
+            const newUser = {
+                first_name: name.split(' ')[0],
+                last_name: name.split(' ')[1],
+                email,
+                password
+            }//Separamos sus valores
+            const { first_name, last_name, email: tokenMail, role, _id } = await manager.addUserGithub(newUser)//Y lo guardamos en la base de datos
+            const token = generateToken({ first_name, last_name, email: tokenMail, role, id: _id.toString() })//Generamos un token
+
+            return res.status(200).cookie('coderCookieToken', token, {
+                httpOnly: true,
+                maxAge: 60 * 60 * 100
+            }).send({ status: 'success', payload: token })//Y accede con github
+        }
+        //Si encuentra el usuario
+        const { first_name, last_name, email: tokenMail, role, _id } = findUser//Separamos sus datos
+        const token = generateToken({ first_name, last_name, email: tokenMail, role, id: _id.toString() })
+        return res.status(200).cookie('coderCookieToken', token, {
+            httpOnly: true,
+            maxAge: 60 * 60 * 100
+        }).send({ status: 'success', payload: token })//Generamos una cookie con sus datos no vulnerables.
     } catch (error) {
         if (error) return error
     }
