@@ -5,7 +5,6 @@ node_modules/
 /src/routers/pets.router.js
 /src/routers/sessionrouter.js
 TODO.md
-/src/process
 /src/DTO/ContactDTO.js
 /src/controllers/contacts.js
 /src/DAO/MongoDAO/models/contactModel.js
