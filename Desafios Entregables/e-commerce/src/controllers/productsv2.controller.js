@@ -16,7 +16,7 @@ class ProductController {
                 return res.status(200).sendSuccess({ products, pageBuild })
             }
 
-            const SEARCH_KEYS = ["sort", "limit", "page", "category", "disponibility"]
+            const SEARCH_KEYS = ["sort", "limit", "page", "category", "status"]
             const successKeys = queryKeys.some(keys => SEARCH_KEYS.includes(keys))
 
             if (!successKeys) return res.status(400).sendServerError('Some keys missmatch with accepted search keys')
