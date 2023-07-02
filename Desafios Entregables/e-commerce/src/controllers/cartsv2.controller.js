@@ -3,6 +3,16 @@ const { cartService, ticketService, productService } = require("../services")
 const { randomUUID } = require('crypto')
 
 class CartController {
+
+    newCart = async (_req, res) => {
+        try {
+            const { _id } = await cartService.newCart()
+            res.status(200).sendSuccess({ message: 'Nuevo carrito generado', cartID: _id.toString() })
+        } catch (error) {
+            res.status(500).sendServerError("Cart not generated")
+        }
+    }
+
     get = async (req, res) => {
         try {
             const { CID } = req.params

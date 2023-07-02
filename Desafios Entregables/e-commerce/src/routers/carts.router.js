@@ -6,6 +6,7 @@ const cart = new CartController()
 
 class CartRouter extends RouterClass {
     init() {
+        this.post('/', ['PUBLIC'], cart.newCart)//generar un carrito nuevo
         this.get('/:CID', ['PUBLIC'], cart.get)//Funciona
         this.put('/:CID', ['USER', 'ADMIN'], cartValidator, cart.addProducts)//Funciona
         this.post('/:CID/purchase', ['USER', "ADMIN"], cart.purchase)//Funciona
