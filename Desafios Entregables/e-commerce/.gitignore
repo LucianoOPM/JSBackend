@@ -1,14 +1,3 @@
 node_modules/
 .env*
-/src/routers/dictionary.router.js
-/src/routers/newUser.router.js
-/src/routers/pets.router.js
-/src/routers/sessionrouter.js
-TODO.md
-/src/DTO/ContactDTO.js
-/src/controllers/contacts.js
-/src/DAO/MongoDAO/models/contactModel.js
-/src/DAO/MongoDAO/contactDAO.js
-/src/repositories/contact.repository.js
-/src/routers/contacts.v2.js
-/.vscode
+/TODO.md
