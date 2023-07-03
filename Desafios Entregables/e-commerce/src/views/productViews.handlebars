@@ -6,14 +6,14 @@
       </a>
       <ul class="navbar-nav custom-nav-ul me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">Carrito</a>
+          <a class="nav-link" href="/cart/{{cartID}}">Carrito</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Contacto</a>
+          <a class="nav-link" href="/chat">Contacto</a>
         </li>
         {{#if addProducts}}
           <li class="nav-item">
-            <a class="nav-link" href="#">Agregar productos</a>
+            <a class="nav-link" href="/realtimeproducts">Agregar productos</a>
           </li>
         {{/if}}
       </ul>
@@ -29,7 +29,7 @@
         </form>
       </div>
       <div>
-        {{#if guest}}
+        {{#if logged}}
           <a href="/login">
             <button class="btn btn-outline-success login-button">Iniciar Sesion</button>
           </a>

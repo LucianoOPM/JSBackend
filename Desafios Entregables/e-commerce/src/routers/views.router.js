@@ -9,7 +9,7 @@ class ViewsRouter extends RouterClass {
     init() {
         /*Views de products*/
         this.get('/products', ['PUBLIC'], authHeaders, views.products)//Funciona
-        this.get('/products/:PID', ['PUBLIC'], views.productsById)//Funciona
+        this.get('/products/:PID', ['PUBLIC'], authHeaders, views.productsById)//Funciona
         /*Views session*/
         /*Login*/
         this.get('/login', ['PUBLIC'], views.login)//Funciona//Para todos los usuarios, pero si ya está logueado, redirigir a productos

@@ -36,8 +36,15 @@ class ViewsController {
         try {
             const { PID } = req.params
             const product = await productService.getById(PID)
+            const user = req?.user ?? null
 
             const productView = {
+                logged: user ? false : true,
+                role: user?.role ?? 'Invitado',
+                addProducts: user?.role === 'ADMIN' ? true : false,
+                first_name: user?.first_name,
+                last_name: user?.last_name,
+                cartID: user?.cartID,
                 title: "E-Commerce",
                 product,
                 style: "product.css",
