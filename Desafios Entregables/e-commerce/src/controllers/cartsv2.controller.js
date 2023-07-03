@@ -29,28 +29,32 @@ class CartController {
     addProducts = async (req, res) => {
         try {
             //Destructuración de los datos a manejar, id del carrito, id del producto y la cantidad que por default siempre será 1
-            const { CID } = req.params
+            const { params: { CID }, body } = req
 
-            const bodyKeys = Object.keys(req.body)
-            if (bodyKeys.length === 0) return res.status(400).sendServerError('Empty Body request')
+            if (body.length === 0) return res.status(400).sendUserError('Empty cart')
+            let { products: cartProducts } = await cartService.get(CID) ?? {}
 
-            const { product, quantity = 1 } = req.body
+            if (!cartProducts) return res.status(404).sendUserError("Cart is not found")
+            //Recorrer el arreglo products en busca del req.body product, si no lo encuentra pushearlo, si lo encuentra aumentar su cantidad
 
             //Valida que el ID del producto y del carrito sean un objectID valido.
-            if (!isValidObjectId(CID) && !isValidObjectId(product)) return res.status(400).sendServerError('Cart ID or Product ID isn\'t a valid object ID')
+            for (let item of body) {
+                const { product, quantity } = item
+                if (!isValidObjectId(CID) || !isValidObjectId(product)) return res.status(400).sendUserError("Cart ID or Product ID is not a valid ID")
 
-            //Se busca el carrito por su ID si no lo encuentra, retornamos un error
-            const carts = await cartService.get(CID)
+                //Validamos que el producto que estamos recibiendo, se encuentro o no dentro del carrito
+                const findProduct = cartProducts.findIndex(productsObject => productsObject.product._id.toString() === product)
 
-            //Validamos que el producto que estamos recibiendo, se encuentro o no dentro del carrito
-            const productExists = carts.products.findIndex(cartProduct => cartProduct.product._id.toString() === product)
+                if (findProduct === -1) {
+                    await cartService.add(CID, product, quantity)
+                }
+                if (findProduct !== -1) {
+                    await cartService.update(CID, product, quantity)
+                }
 
-            //Si el producto se encuentra dentro del carrito, retornamos un error
-            if (productExists !== -1) {
-                return res.status(400).sendUserError('Product already exists')
             }
-            const added = await cartService.add(CID, product, quantity)
-            return res.status(200).sendSuccess({ cart: added._id, products: added.products })
+            let { products } = await cartService.get(CID)
+            return res.status(200).sendSuccess({ message: "Productos agregados o actualizados", products })
         } catch (error) {
             res.status(500).sendServerError(error.message)
         }
