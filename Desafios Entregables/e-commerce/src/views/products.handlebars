@@ -4,14 +4,14 @@
       <span class="navbar-brand">E-Commerce</span>
       <ul class="navbar-nav custom-nav-ul me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">Carrito</a>
+          <a class="nav-link" href="/cart/{{cartID}}">Carrito</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Contacto</a>
+          <a class="nav-link" href="/chat">Contacto</a>
         </li>
         {{#if addProducts}}
           <li class="nav-item">
-            <a class="nav-link" href="#">Agregar productos</a>
+            <a class="nav-link" href="/realtimeproducts">Agregar productos</a>
           </li>
         {{/if}}
       </ul>
@@ -65,12 +65,12 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">Producto:
-              <a href="/products/{{this.id}}">{{this.title}}</a></h5>
+              <a href="/products/{{this.idProduct}}">{{this.title}}</a></h5>
             <p class="card-text">Description: {{this.description}}</p>
             <p class="card-text">Price: {{this.price}}</p>
             <p class="card-text"><small class="text-body-secondary">Disponibles:
                 {{this.stock}}</small></p>
-            <a href="/products/{{this.id}}"><button
+            <a href="/products/{{this.idProduct}}"><button
                 class="btn btn-outline-success buy-button"
               >Comprar</button></a>
           </div>
