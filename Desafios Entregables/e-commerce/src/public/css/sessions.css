@@ -1,13 +1,15 @@
-main {
-    background-color: #f2f2f2;
-    font-family: Arial, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+body {
+  background-color: #A0C49D;
+  font-family: Arial, sans-serif;
   }
+
+header{
+  background-color: #E1ECC8;
+  border-bottom: 3px solid black;
+  height: 100px;
+}
   
-  .login-container .register-container {
+.login-container .register-container {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
