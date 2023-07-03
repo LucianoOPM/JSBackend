@@ -44,7 +44,26 @@ const authToken = async (req, res, next) => {
     }
 }
 
+const authHeaders = (req, _res, next) => {
+    const cookieHeader = req.headers.cookie ?? req.headers.authorization ?? null
+    if (!cookieHeader) return next()
+
+    if (cookieHeader.includes('=')) {
+        const token = cookieHeader.split('=')[1]
+        const { user } = jwt.verify(token, SECRET_KEY)
+        req.user = user
+        next()
+    }
+    if (cookieHeader.toLowerCase().includes('bearer')) {
+        const token = cookieHeader.split(' ')[1]
+        const { user } = jwt.verify(token, SECRET_KEY)
+        req.user = user
+        next()
+    }
+}
+
 module.exports = {
     generateToken,
-    authToken
+    authToken,
+    authHeaders
 }

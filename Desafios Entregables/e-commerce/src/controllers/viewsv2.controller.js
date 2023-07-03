@@ -6,17 +6,23 @@ class ViewsController {
     products = async (req, res) => {
         try {
             const queryBuild = querySearch(req.query, "products")
-            const products = await productService.paginate(queryBuild)
+            const { products, pagination: pages } = await productService.paginate(queryBuild)
+            const { prevLink, nextLink } = pagination(req, pages)
 
-            const { docs, nextLink, prevLink } = pagination(req, products)
+            const user = req?.user ?? null
 
             const productsRender = {
+                logged: user ? false : true,
                 title: "E-Commerce",
-                docs,
+                products,
                 style: "products.css",
                 nextLink,
                 prevLink,
-                script: "viewProducts.js"
+                script: "viewProducts.js",
+                role: user?.role ?? 'Invitado',
+                addProducts: user?.role == 'ADMIN' ? true : false,
+                first_name: user?.first_name,
+                last_name: user?.last_name
             }
 
             res.status(200).render('products', productsRender)

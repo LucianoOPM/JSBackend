@@ -18,7 +18,7 @@ class SessionController {
 
             if (!rightPass) return res.status(400).sendServerError('User or password are wrong')
 
-            const token = generateToken({ user: { userID: nonSensitiveUser.userID, role: nonSensitiveUser.role, cartID: nonSensitiveUser.cartID, email: nonSensitiveUser.email } })
+            const token = generateToken({ user: { first_name: nonSensitiveUser.first_name, last_name: nonSensitiveUser.last_name, userID: nonSensitiveUser.userID, role: nonSensitiveUser.role, cartID: nonSensitiveUser.cartID, email: nonSensitiveUser.email } })
 
             res.status(200)
                 .cookie('coderCookieToken', token, {
@@ -65,8 +65,8 @@ class SessionController {
                 }).sendSuccess(`user created ${token}`)//Y accede con github
             }
             //Si encuentra el usuario
-            const { nonSensitiveUser: { userID, cartID, role, email } } = findUser//Separamos sus datos
-            const token = generateToken({ user: { userID, cartID, role, email } })
+            const { nonSensitiveUser: { userID, cartID, role, email, first_name, last_name } } = findUser//Separamos sus datos
+            const token = generateToken({ user: { userID, cartID, role, email, first_name, last_name } })
             return res.status(200).cookie('coderCookieToken', token, {
                 httpOnly: true,
                 maxAge: 60 * 60 * 1000

@@ -27,7 +27,7 @@
         </form>
       </div>
       <div>
-        {{#if guest}}
+        {{#if logged}}
           <a href="/login">
             <button class="btn btn-outline-success login-button">Iniciar Sesion</button>
           </a>
@@ -52,7 +52,7 @@
 </header>
 {{! Si hay una sesion activa, cerrar sesion }}
 <main>
-  {{#each docs}}
+  {{#each products}}
     <div class="card mb-3 mt-3 products" style="max-width: 750px;">
       <div class="row g-0">
         <div class="col-md-4">
