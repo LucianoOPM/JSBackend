@@ -15,7 +15,7 @@ regButton.addEventListener('click', (e) => {
     }
 
 
-    fetch('/api/v2/users', {
+    fetch('/api/users', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

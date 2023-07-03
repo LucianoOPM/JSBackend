@@ -91,10 +91,7 @@ class UserController {
             const token = generateToken({ user: { userID: registeredUser.userID, role: registeredUser.role, cartID: registeredUser.cartID, email: registeredUser.email } })
 
             //Entrega el token a la cookie "coderCookieToken" y le asigna la configuración
-            res.status(200).cookie('coderCookieToken', token, {
-                httpOnly: true,
-                maxAge: 60 * 60 * 1000
-            }).sendSuccess('user register successfully')
+            res.status(200).sendSuccess({ message: 'User registered Successfully', token })
         } catch (error) {
             res.status(500).sendServerError(error.message)
         }
