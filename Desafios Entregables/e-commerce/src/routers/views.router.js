@@ -1,5 +1,6 @@
 const { authHeaders } = require("../config/passportJWT");
 const ViewsController = require("../controllers/viewsv2.controller");
+const alreadyLogged = require("../middleware/alreadyLogged");
 const RouterClass = require("./RouterClass");
 
 const views = new ViewsController()
@@ -12,15 +13,15 @@ class ViewsRouter extends RouterClass {
         this.get('/products/:PID', ['PUBLIC'], authHeaders, views.productsById)//Funciona
         /*Views session*/
         /*Login*/
-        this.get('/login', ['PUBLIC'], views.login)//Funciona//Para todos los usuarios, pero si ya está logueado, redirigir a productos
+        this.get('/login', ['PUBLIC'], authHeaders, alreadyLogged, views.login)//Funciona//Para todos los usuarios, pero si ya está logueado, redirigir a productos
         // this.get('/logout', ['PUBLIC'], views.logout)
-        this.get('/register', ['PUBLIC'], views.register)//Funciona//Para todos los usuarios, pero si ya está logueado redirigir a productos
+        this.get('/register', ['PUBLIC'], authHeaders, alreadyLogged, views.register)//Funciona//Para todos los usuarios, pero si ya está logueado redirigir a productos
         this.get('/restore', ['PUBLIC'], views.restore)//Funciona
         /*Realtimeproducts*/
         this.get('/realtimeproducts', ['ADMIN'], views.realtimeproducts)//Funciona//Sólo para personal autorizado(admins)
         /*chat*/
         this.get('/chat', ['USER', 'ADMIN'], views.chat)//Implementado, pero no funciona
-        this.get('/cart/:cid', ['PUBLIC'], views.userCart)
+        this.get('/cart/:cid', ['USER'], views.userCart)
     }
 }
 
