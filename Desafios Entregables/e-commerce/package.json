@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "node src/main.js --mode development",
-    "dev": "nodemon src/main.js --mode production"
+    "start": "node src/main.js --mode production",
+    "dev": "nodemon src/main.js --mode development"
   },
   "keywords": [],
   "author": "",
