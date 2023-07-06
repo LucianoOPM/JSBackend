@@ -127,11 +127,15 @@ class ViewsController {
     userCart = async (req, res) => {
         try {
             const { cid } = req.params
-            const { docs } = await cartService.getCarts(cid)
+            const { products, qty } = await cartService.get(cid)
+
+            const costoTotal = products.map(item => item.product.price * item.qty).reduce((acc, curr) => acc + curr, 0)
 
             const cartRender = {
-                emptyCart: docs[0].products.length < 1 ? true : false,
-                renderCart: docs,
+                emptyCart: products.length < 1 ? true : false,
+                products,
+                qty,
+                total: costoTotal,
                 style: "normalize.css",
                 title: `Cart ${cid}`
             }
