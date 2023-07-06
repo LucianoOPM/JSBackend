@@ -21,7 +21,7 @@ class ViewsRouter extends RouterClass {
         this.get('/realtimeproducts', ['ADMIN'], views.realtimeproducts)//Funciona//Sólo para personal autorizado(admins)
         /*chat*/
         this.get('/chat', ['USER', 'ADMIN'], views.chat)//Implementado, pero no funciona
-        this.get('/cart/:cid', ['USER'], views.userCart)
+        this.get('/cart/:cid', ['USER', 'ADMIN'], views.userCart)
     }
 }
 
