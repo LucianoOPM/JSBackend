@@ -16,7 +16,7 @@ class CartManagerM {
      */
     findCart = async (cid) => {
         try {
-            return cartModel.findOne({ _id: cid }).populate("products.product")
+            return cartModel.findOne({ _id: cid }).populate("products.product").lean()
         } catch (error) {
             throw error
         }
