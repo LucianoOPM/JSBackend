@@ -14,11 +14,10 @@ addBtn.addEventListener('click', (e) => {
     formValues.append("thumbnail", form.thumbnail.files[0])
     formValues.append("code", form.code.value)
     formValues.append("stock", form.stock.value)
-    formValues.append("status", form.status.value == "on" ? true : false)
+    formValues.append("status", form.status.checked ? true : false)
     formValues.append("category", form.category.value)
 
-
-    fetch('http://localhost:8080/api/v2/products', {
+    fetch('http://localhost:8080/api/products', {
         method: 'POST',
         body: formValues
     })
@@ -62,7 +61,7 @@ delButton.addEventListener('click', (e) => {
     const confirmar = confirm(`ATENCION!!!\n¿Esta seguro de eliminar el producto con ID: ${idProduct.value}?`)
 
     if (confirmar) {
-        fetch(`http://localhost:8080/api/v2/products/${idProduct.value}`, {
+        fetch(`http://localhost:8080/api/products/${idProduct.value}`, {
             method: 'DELETE'
         })
             .then(res => res.json())

@@ -9,6 +9,7 @@ const chatSocket = require('./utils/chatSocket.js')
 const passport = require('passport')
 const initPassport = require('./config/passport.config.js')
 const cors = require('cors')
+const errorMiddleware = require('./middleware/errors/indexError.js')
 
 //Ejecucion de funciones.
 const app = express()
@@ -27,10 +28,7 @@ passport.use(passport.initialize())
 
 //routers
 app.use(main)
-app.use((err, req, res, next) => {
-    console.log(err)
-    res.status(500).send(err.message)
-})
+app.use(errorMiddleware)
 
 const httpServer = app.listen(process.env.PORT, (err) => {
     if (err)`ERROR en el servidor ${err}`

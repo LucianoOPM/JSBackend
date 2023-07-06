@@ -6,7 +6,7 @@ class ProductDto {
         this.price = product.price
         this.thumbnails = product.thumbnail
         this.code = product.code
-        this.status = product.stock === 0 ? false : true
+        this.status = product.status
         this.stock = product.stock
         this.category = product.category
     }

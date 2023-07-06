@@ -3,6 +3,9 @@ const { productService } = require("../services");
 const querySearch = require("../utils/querySearch");
 const pageBuilder = require("../utils/pageBuilder");
 const fileUrl = require("../utils/fileUrl");
+const CustomErrors = require("../services/errors/CustomErrors");
+const productEnumError = require("../services/errors/enumError");
+const { nullOrEmptyValues, repetedProductError } = require("../services/errors/productsErrorMessage");
 
 class ProductController {
     get = async (req, res) => {
@@ -45,19 +48,30 @@ class ProductController {
         }
     }
 
-    post = async (req, res) => {
+    post = async (req, res, next) => {
         try {
-            let { title, description, price, code, stock, category, status } = req.body
-            if (status) {
-                status = Boolean(status)
+            let { title, description, price, code, stock, category } = req.body
+
+            if (!title.trim() || !price || !code || !stock || !category || !description) {
+                CustomErrors.productError({
+                    name: "Product Creation Error",
+                    code: productEnumError.UNDEFINED_OR_NULL_VALUES,
+                    cause: nullOrEmptyValues(req.body),
+                    message: 'Error trying to create a new product.'
+                })
             }
-            const fileLocation = req.file ? fileUrl(req.file) : null
-
-            if (!title || !price || !code || !stock || !category || !description) return res.status(400).sendServerError("There's empty values")
-
             const findProduct = await productService.getByCode(code)
+            if (findProduct) {
+                CustomErrors.productError({
+                    name: 'Product Creation Error',
+                    code: productEnumError.REPETED_PRODUCT,
+                    cause: repetedProductError(req.body),
+                    message: 'Error trying to create a new product.'
+                })
+            }
 
-            if (findProduct) return res.status(401).sendUserError('Product already exists')
+            const fileLocation = req.file ? fileUrl(req.file) : null
+            const status = req.body.status == 'true' || req.body.status == true
 
             const newProduct = {
                 title,
@@ -73,7 +87,7 @@ class ProductController {
 
             res.status(200).sendSuccess({ message: 'Product created', addProduct })
         } catch (error) {
-            res.status(500).sendServerError(error.message)
+            next(error)
         }
     }
 
