@@ -1,7 +1,7 @@
 const { authHeaders } = require("../config/passportJWT");
 const ViewsController = require("../controllers/viewsv2.controller");
 const alreadyLogged = require("../middleware/alreadyLogged");
-const RouterClass = require("./RouterClass");
+const RouterClass = require("./routerClass");
 
 const views = new ViewsController()
 
