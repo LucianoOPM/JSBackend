@@ -10,6 +10,7 @@ const passport = require('passport')
 const initPassport = require('./config/passport.config.js')
 const cors = require('cors')
 const errorMiddleware = require('./middleware/errors/indexError.js')
+const addLogger = require('./middleware/logger.midd.js')
 
 //Ejecucion de funciones.
 const app = express()
@@ -27,6 +28,13 @@ app.use(cookieParser("S1gn3d Co0k13"))
 passport.use(passport.initialize())
 
 //routers
+if (process.argv.includes('production')) {
+    app.use(addLogger)
+    console.log("Modo produccion")
+} else if (process.argv.includes('development')) {
+    app.use(addLogger)
+    console.log("modo desarrollo")
+}
 app.use(main)
 app.use(errorMiddleware)
 
