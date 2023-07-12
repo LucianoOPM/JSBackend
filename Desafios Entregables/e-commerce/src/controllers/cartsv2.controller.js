@@ -1,14 +1,15 @@
 const { isValidObjectId } = require("mongoose")
 const { cartService, ticketService, productService } = require("../services")
 const { randomUUID } = require('crypto')
+const logger = require('../config/logger.js')
 
 class CartController {
-
     newCart = async (_req, res) => {
         try {
             const { _id } = await cartService.newCart()
             res.status(200).sendSuccess({ message: 'Nuevo carrito generado', cartID: _id.toString() })
         } catch (error) {
+            logger.error(error.message)
             res.status(500).sendServerError("Cart not generated")
         }
     }
@@ -22,6 +23,7 @@ class CartController {
 
             res.status(200).sendSuccess({ status: 'ok', cartID, products })
         } catch (error) {
+            logger.error(error.message)
             res.status(500).sendServerError(error.message)
         }
     }
@@ -56,6 +58,7 @@ class CartController {
             let { products } = await cartService.get(CID)
             return res.status(200).sendSuccess({ message: "Productos agregados o actualizados", products })
         } catch (error) {
+            logger.error(error.message)
             res.status(500).sendServerError(error.message)
         }
     }
@@ -80,6 +83,7 @@ class CartController {
 
             res.status(200).sendSuccess(updateQuantity)
         } catch (error) {
+            logger.error(error.message)
             res.status(500).sendServerError(error.message)
         }
     }
@@ -98,6 +102,7 @@ class CartController {
 
             res.status(200).sendSuccess(clearCart)
         } catch (error) {
+            logger.error(error.message)
             res.status(500).sendServerError(error.message)
         }
     }
@@ -116,6 +121,7 @@ class CartController {
 
             res.status(200).sendSuccess(delProduct)
         } catch (error) {
+            logger.error(error.message)
             res.status(500).sendServerError(error.message)
         }
     }
@@ -171,6 +177,7 @@ class CartController {
 
             res.status(200).sendSuccess({ message: 'Compra realizada', ticket: generateTicket, productosNoDisponibles: unbuyableProducts })
         } catch (error) {
+            logger.error(error.message)
             return res.status(500).sendServerError(error.message)
         }
     }
