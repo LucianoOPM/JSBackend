@@ -74,4 +74,4 @@ const LOGGER_LEVELS = {
     })
 }
 
-module.exports = LOGGER_LEVELS
+module.exports = LOGGER_LEVELS[process.argv.includes('production') ? "proLogger" : "devLogger"]

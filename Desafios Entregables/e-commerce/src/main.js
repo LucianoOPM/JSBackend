@@ -11,7 +11,7 @@ const initPassport = require('./config/passport.config.js')
 const cors = require('cors')
 const errorMiddleware = require('./middleware/errors/indexError.js')
 const addLogger = require('./middleware/logger.midd.js')
-const { proLogger: logger } = require('./config/logger.js')
+const logger = require('./config/logger.js')
 
 //Ejecucion de funciones.
 const app = express()

@@ -1,5 +1,5 @@
 const { connect } = require('mongoose')
-const { proLogger: logger } = require('../config/logger');
+const logger = require('../config/logger');
 
 class MongoSingleton {
     static #instance
