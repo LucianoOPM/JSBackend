@@ -1,4 +1,5 @@
 const { connect } = require('mongoose')
+const { proLogger: logger } = require('../config/logger');
 
 class MongoSingleton {
     static #instance
@@ -11,12 +12,12 @@ class MongoSingleton {
     static getInstance = () => {
 
         if (this.#instance) {
-            console.log('Database is already connected.');
+            logger.warning('Database is already connected.');
             return this.#instance
         }
 
         this.#instance = new MongoSingleton()
-        console.log('Database connected');
+        logger.info('Database connected');
         return this.#instance
     }
 }
