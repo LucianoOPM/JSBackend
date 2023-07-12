@@ -1,5 +1,4 @@
 const nullOrEmptyValues = ({ title, price, code, stock, category, description }) => {
-    console.log(price)
     if (!title.trim()) return `Product needs a String type title but recived ${title} with ${typeof title} value`
     if (!price) return `Product needs a Number type for price but recived ${price} with ${typeof price} value`
     if (!code.trim()) return `Product needs a String type code but recived ${code} with ${typeof code} value`
